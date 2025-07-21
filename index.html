@@ -16,7 +16,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none' stroke='%23e879f9' stroke-width='2'%3E%3Cpath d='M10 22V6l14-3v16'%3E%3C/path%3E%3Ccircle cx='8' cy='22' r='4' fill='%23c084fc'%3E%3C/circle%3E%3Ccircle cx='22' cy='20' r='4' fill='%23e879f9'%3E%3C/circle%3E%3C/svg%3E"), auto;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e879f9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18V5l12-2v13'%3E%3C/path%3E%3Ccircle cx='6' cy='18' r='3'%3E%3C/circle%3E%3Ccircle cx='18' cy='16' r='3'%3E%3C/circle%3E%3C/svg%3E"), auto;
         }
         
         .title-font {
@@ -87,13 +87,27 @@
         }
         
         @keyframes ripple {
-            0% { transform: scale(0, 0); opacity: 0.5; }
-            100% { transform: scale(20, 20); opacity: 0; }
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
         }
         
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        .slide-in { animation: slideIn 0.5s ease-out; }
-        .pulse { animation: pulse 2s infinite; }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
         
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -144,10 +158,15 @@
             overflow: hidden;
         }
         
-        .music-image video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .music-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
         }
         
         .glow-border {
@@ -160,6 +179,7 @@
             to { box-shadow: 0 0 30px rgba(216, 180, 254, 0.8); }
         }
         
+        /* Heavenly concert background */
         .concert-bg {
             position: fixed;
             top: 0;
@@ -221,15 +241,33 @@
             animation: wave 15s infinite linear;
         }
         
-        .wave:nth-child(2) { animation-delay: 3s; opacity: 0.3; }
-        .wave:nth-child(3) { animation-delay: 6s; opacity: 0.2; }
-        .wave:nth-child(4) { animation-delay: 9s; opacity: 0.1; }
-        
-        @keyframes wave {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+        .wave:nth-child(2) {
+            animation-delay: 3s;
+            opacity: 0.3;
         }
         
+        .wave:nth-child(3) {
+            animation-delay: 6s;
+            opacity: 0.2;
+        }
+        
+        .wave:nth-child(4) {
+            animation-delay: 9s;
+            opacity: 0.1;
+        }
+        
+        @keyframes wave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        
+        /* Click effect */
         .click-ripple {
             position: absolute;
             border-radius: 50%;
@@ -241,10 +279,17 @@
         }
         
         @keyframes clickRipple {
-            0% { transform: scale(0); opacity: 0.8; }
-            100% { transform: scale(10); opacity: 0; }
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+            }
         }
         
+        /* Footer */
         .footer {
             background: linear-gradient(90deg, rgba(10, 0, 26, 0.8), rgba(20, 0, 50, 0.8));
             backdrop-filter: blur(5px);
@@ -270,6 +315,12 @@
             margin-left: 5px;
         }
         
+        /* Holographic effect */
+        .holographic {
+            position: relative;
+            overflow: hidden;
+        }
+        
         .holographic::before {
             content: '';
             position: absolute;
@@ -293,6 +344,7 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Click effect particles */
         .click-particle {
             position: absolute;
             background: radial-gradient(circle, #e879f9 0%, transparent 70%);
@@ -304,10 +356,17 @@
         }
         
         @keyframes particleAnimation {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
         }
         
+        /* Music card placeholder images */
         .music-placeholder {
             background: linear-gradient(135deg, #1e0a3c 25%, #0a001a 25%, #0a001a 50%, #1e0a3c 50%, #1e0a3c 75%, #0a001a 75%, #0a001a 100%);
             background-size: 20px 20px;
@@ -331,12 +390,14 @@
             100% { left: 150%; }
         }
         
+        /* Neon glow */
         .neon-text {
             text-shadow: 0 0 5px rgba(233, 213, 255, 0.8), 
                          0 0 10px rgba(233, 213, 255, 0.5), 
                          0 0 15px rgba(233, 213, 255, 0.3);
         }
         
+        /* Enhanced visual click effect */
         .visual-click {
             position: absolute;
             width: 50px;
@@ -354,6 +415,7 @@
             100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
         }
         
+        /* Equalizer animation */
         .equalizer {
             position: fixed;
             bottom: 60px;
@@ -384,6 +446,7 @@
         .eq4 { animation: equalize4 0.9s ease-in-out infinite; }
         .eq5 { animation: equalize5 1.1s ease-in-out infinite; }
         
+        /* VS badge */
         .vs-badge {
             background: linear-gradient(135deg, #c084fc, #e879f9);
             width: 60px;
@@ -410,11 +473,13 @@
             animation: pulse 2s infinite;
         }
         
+        /* Music card title */
         .music-title-bg {
             background: linear-gradient(90deg, rgba(233, 213, 255, 0.1), rgba(216, 180, 254, 0.1));
             border-left: 3px solid #e879f9;
         }
         
+        /* Stats bars */
         .stat-bar {
             height: 6px;
             background: rgba(255, 255, 255, 0.1);
@@ -422,10 +487,22 @@
             overflow: hidden;
         }
         
-        .stat-fill-1 { height: 100%; background: linear-gradient(90deg, #c084fc, #e879f9); }
-        .stat-fill-2 { height: 100%; background: linear-gradient(90deg, #60a5fa, #3b82f6); }
-        .stat-fill-3 { height: 100%; background: linear-gradient(90deg, #f472b6, #ec4899); }
+        .stat-fill-1 {
+            height: 100%;
+            background: linear-gradient(90deg, #c084fc, #e879f9);
+        }
         
+        .stat-fill-2 {
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        }
+        
+        .stat-fill-3 {
+            height: 100%;
+            background: linear-gradient(90deg, #f472b6, #ec4899);
+        }
+        
+        /* Music note animation */
         .floating-notes {
             position: fixed;
             top: 0;
@@ -445,12 +522,23 @@
         }
         
         @keyframes floatNote {
-            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
         }
         
+        /* CD Vinyl animation */
         .vinyl {
             width: 100%;
             height: 100%;
@@ -491,6 +579,7 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Play indicator */
         .play-indicator {
             position: absolute;
             top: 10px;
@@ -518,6 +607,7 @@
             fill: #fff;
         }
         
+        /* Music genre tags */
         .genre-tag {
             display: inline-block;
             padding: 2px 8px;
@@ -530,12 +620,14 @@
             border: 1px solid rgba(233, 213, 255, 0.3);
         }
         
+        /* Artist name */
         .artist-name {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
             margin-top: 2px;
         }
         
+        /* Music DNA visualization */
         .dna-strand {
             display: flex;
             justify-content: center;
@@ -563,13 +655,27 @@
             transform: translateX(-50%);
         }
         
-        .dna-node::before { top: 4px; }
-        .dna-node::after { bottom: 4px; }
+        .dna-node::before {
+            top: 4px;
+        }
         
-        .dna-node:nth-child(even) { height: 30px; }
-        .dna-node:nth-child(even)::before { top: 6px; }
-        .dna-node:nth-child(even)::after { bottom: 6px; }
+        .dna-node::after {
+            bottom: 4px;
+        }
         
+        .dna-node:nth-child(even) {
+            height: 30px;
+        }
+        
+        .dna-node:nth-child(even)::before {
+            top: 6px;
+        }
+        
+        .dna-node:nth-child(even)::after {
+            bottom: 6px;
+        }
+        
+        /* Music mood badges */
         .mood-badge {
             display: inline-flex;
             align-items: center;
@@ -593,6 +699,7 @@
             box-shadow: 0 0 10px rgba(233, 213, 255, 0.5);
         }
         
+        /* Music player animation */
         .music-playing-animation {
             display: flex;
             align-items: flex-end;
@@ -618,6 +725,10 @@
     </style>
 </head>
 <body class="text-white">
+    <!-- Hidden audio element for click sound -->
+    <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+
+    <!-- Heavenly Concert Background Elements -->
     <div class="concert-bg"></div>
     <div class="stars" id="stars"></div>
     <div class="sound-waves">
@@ -628,6 +739,7 @@
     </div>
     <div class="floating-notes" id="floating-notes"></div>
     
+    <!-- Equalizer animation -->
     <div class="equalizer">
         <div class="equalizer-bar eq1"></div>
         <div class="equalizer-bar eq2"></div>
@@ -637,6 +749,7 @@
     </div>
     
     <div id="app" class="container mx-auto px-4 py-8 max-w-6xl relative">
+        <!-- Home Screen -->
         <div id="home-screen" class="flex flex-col items-center justify-center min-h-[80vh] fade-in">
             <h1 class="text-4xl md:text-6xl font-bold text-center mb-6 neon-text title-font tracking-wider">MUSIC VERSE BATTLE</h1>
             <p class="text-lg md:text-xl text-center mb-12 max-w-2xl text-gray-300 subtitle-font">Discover your ultimate favorite song through exciting head-to-head battles in a heavenly concert experience. Your chosen track moves forward to face the next challenger!</p>
@@ -645,24 +758,22 @@
             </button>
         </div>
 
+        <!-- Music Battle Screen -->
         <div id="battle-screen" class="hidden fade-in">
             <div class="text-center mb-10">
-                <h2 class="text-2xl md:text-3xl font-bold mb-3 title-font neon-text">Battle <span id="current-battle">1</span> of <span id="total-battles">43</span></h2>
+                <h2 class="text-2xl md:text-3xl font-bold mb-3 title-font neon-text">Battle <span id="current-battle">1</span> of <span id="total-battles">159</span></h2>
                 <p class="text-gray-300 mb-5 subtitle-font">Choose your favorite track</p>
                 <div class="progress-bar w-full max-w-xl mx-auto mb-3">
                     <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
                 </div>
-                <p class="text-sm text-gray-400 subtitle-font">Songs remaining: <span id="songs-remaining">43</span></p>
+                <p class="text-sm text-gray-400 subtitle-font">Songs remaining: <span id="songs-remaining">159</span></p>
             </div>
             
             <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 my-8">
                 <div id="champion-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full md:w-96 slide-in">
                     <div class="h-56 bg-gray-900 flex items-center justify-center overflow-hidden relative">
-                        <div class="music-image w-full h-full bg-center bg-cover">
-                            <video class="music-video" muted loop playsinline>
-                                <source type="video/mp4">
-                            </video>
-                            <div class="vinyl-container w-32 h-32 relative hidden">
+                        <div class="music-image music-placeholder w-full h-full bg-center bg-cover flex items-center justify-center">
+                            <div class="vinyl-container w-32 h-32 relative">
                                 <div class="vinyl"></div>
                             </div>
                         </div>
@@ -693,11 +804,8 @@
                 
                 <div id="challenger-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full md:w-96 slide-in">
                     <div class="h-56 bg-gray-900 flex items-center justify-center overflow-hidden relative">
-                        <div class="music-image w-full h-full bg-center bg-cover">
-                            <video class="music-video" muted loop playsinline>
-                                <source type="video/mp4">
-                            </video>
-                            <div class="vinyl-container w-32 h-32 relative hidden">
+                        <div class="music-image music-placeholder w-full h-full bg-center bg-cover flex items-center justify-center">
+                            <div class="vinyl-container w-32 h-32 relative">
                                 <div class="vinyl"></div>
                             </div>
                         </div>
@@ -726,13 +834,16 @@
             </div>
         </div>
 
+        <!-- Music DNA Analysis Result Screen -->
         <div id="result-screen" class="hidden fade-in relative">
             <div class="flex flex-col items-center justify-center min-h-[80vh] py-8 relative z-10">
+                <!-- Glowing Header -->
                 <div class="text-center mb-10">
                     <h2 class="text-4xl md:text-5xl font-bold title-font neon-text mb-3">YOUR MUSIC DNA</h2>
                     <div class="w-60 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
                 </div>
                 
+                <!-- Winner Card with Accents -->
                 <div class="relative mb-10">
                     <div class="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-purple-400"></div>
                     <div class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-pink-500"></div>
@@ -741,11 +852,8 @@
                     
                     <div id="winner-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full max-w-md slide-in glow-border">
                         <div class="h-64 bg-gray-900 flex items-center justify-center overflow-hidden relative">
-                            <div class="winner-image w-full h-full bg-center bg-cover">
-                                <video class="music-video" muted loop playsinline>
-                                    <source type="video/mp4">
-                                </video>
-                                <div class="vinyl-container w-40 h-40 relative hidden">
+                            <div class="winner-image music-placeholder w-full h-full bg-center bg-cover flex items-center justify-center">
+                                <div class="vinyl-container w-40 h-40 relative">
                                     <div class="vinyl"></div>
                                 </div>
                             </div>
@@ -768,9 +876,13 @@
                     </div>
                 </div>
                 
+                <!-- Music DNA Analysis -->
                 <div class="music-card p-6 rounded-xl max-w-2xl mx-auto mb-10 glow-border">
                     <h3 class="text-2xl font-bold mb-4 text-center title-font text-purple-400">YOU ARE A <span id="listener-type" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">MELODIC DREAMER</span></h3>
-                    <p id="listener-description" class="text-gray-300 text-center mb-6 subtitle-font">Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes.</p>
+                    
+                    <p id="listener-description" class="text-gray-300 text-center mb-6 subtitle-font">Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes. You connect with music on a profound level, often using it as an escape to create your own inner worlds. Music is not just entertainment for you—it's a companion for your most introspective moments.</p>
+                    
+                    <!-- DNA Visualization -->
                     <div class="dna-strand">
                         <div class="dna-node"></div>
                         <div class="dna-node"></div>
@@ -786,6 +898,8 @@
                         <div class="dna-node"></div>
                         <div class="dna-node"></div>
                     </div>
+                    
+                    <!-- Music Preferences -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                         <div>
                             <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">GENRE AFFINITY</h4>
@@ -801,7 +915,7 @@
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-xs mb-1">
-                                        <span>Pop</span>
+                                        <span>Piano</span>
                                         <span id="genre-piano-percent">65%</span>
                                     </div>
                                     <div class="stat-bar">
@@ -810,7 +924,7 @@
                                 </div>
                                 <div>
                                     <div class="flex justify-between text-xs mb-1">
-                                        <span>Electronic</span>
+                                        <span>Jazz</span>
                                         <span id="genre-jazz-percent">45%</span>
                                     </div>
                                     <div class="stat-bar">
@@ -819,6 +933,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div>
                             <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">MOOD PREFERENCE</h4>
                             <div class="flex flex-wrap justify-center">
@@ -828,6 +943,7 @@
                                 <div class="mood-badge">Uplifting</div>
                             </div>
                         </div>
+                        
                         <div>
                             <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">LISTENING STYLE</h4>
                             <div class="flex flex-col gap-3">
@@ -862,6 +978,8 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Action Buttons -->
                 <div class="flex gap-6">
                     <button id="restart-button" class="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg subtitle-font">
                         RESTART
@@ -873,6 +991,7 @@
             </div>
         </div>
         
+        <!-- Footer -->
         <footer class="footer fixed bottom-0 left-0 w-full py-3 px-4 text-center text-sm text-gray-400 z-10">
             <p>
                 Made with <span class="heart">❤</span> by Barnik Bhai in 
@@ -891,111 +1010,316 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Create click sound
-            const clickSound = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
+            // Get the click sound audio element
+            const clickSound = document.getElementById('clickSound');
 
-            // Song data with video IDs
+            // Function to play the click sound
+            function playClickSound() {
+                if (clickSound) {
+                    clickSound.currentTime = 0; // Rewind to start for quick successive clicks
+                    clickSound.play().catch(e => console.error("Error playing click sound:", e));
+                }
+            }
+
+            // Add a global click listener to play the sound
+            document.addEventListener('click', playClickSound);
+
+            // Function to determine a basic genre based on artist or keywords
+            function getBasicGenre(artist, title) {
+                artist = artist.toLowerCase();
+                title = title.toLowerCase();
+
+                if (artist.includes("alan walker") || artist.includes("avicii") || artist.includes("kygo") || artist.includes("marshmello") || artist.includes("the chainsmokers") || artist.includes("david guetta") || artist.includes("meduza") || artist.includes("k-391") || artist.includes("illenium") || artist.includes("axwell") || artist.includes("egzod") || artist.includes("diviners") || artist.includes("cartoon") || artist.includes("thefatrat")) {
+                    return "Electronic";
+                }
+                if (artist.includes("imagine dragons") || artist.includes("coldplay") || artist.includes("twenty one pilots") || artist.includes("the script") || artist.includes("glass animals") || artist.includes("royal & the serpent")) {
+                    return "Rock";
+                }
+                if (artist.includes("justin bieber") || artist.includes("camila cabello") || artist.includes("sia") || artist.includes("pitbull") || artist.includes("sub urban") || artist.includes("jung kook") || artist.includes("lady gaga") || artist.includes("the kid laroi") || artist.includes("shawn mendes") || artist.includes("harry styles") || artist.includes("one direction") || artist.includes("ed sheeran") || artist.includes("alec benjamin") || artist.includes("lukas graham") || artist.includes("passenger") || artist.includes("post malone") || artist.includes("the weeknd") || artist.includes("boywithuke") || artist.includes("duncan laurence")) {
+                    return "Pop";
+                }
+                if (artist.includes("joe hisaishi") || artist.includes("radwimps") || artist.includes("yoasobi") || artist.includes("kenshi yonezu") || artist.includes("queen bee") || artist.includes("物語シリーズ") || artist.includes("d4vd") || artist.includes("woodkid") || artist.includes("stromae") || artist.includes("manu pilas")) {
+                    return "J-Pop/Anime"; // Grouping Japanese artists and anime-related
+                }
+                if (artist.includes("lil nas x") || artist.includes("juice wrld") || artist.includes("blackway") || artist.includes("ashnikko")) {
+                    return "Hip Hop";
+                }
+                if (artist.includes("trinidad cardona") || artist.includes("ali sethi")) {
+                    return "World";
+                }
+                if (artist.includes("gustavo santaolalla")) {
+                    return "Soundtrack";
+                }
+                if (artist.includes("bewhy")) {
+                    return "K-Pop";
+                }
+                if (artist.includes("fc barcelona")) {
+                    return "Anthem";
+                }
+                if (artist.includes("geeks music")) {
+                    return "Instrumental";
+                }
+                // Default or fallback genres
+                if (title.includes("remix") || title.includes("electronic") || title.includes("edm")) {
+                    return "Electronic";
+                }
+                if (title.includes("rock") || title.includes("band")) {
+                    return "Rock";
+                }
+                if (title.includes("hip hop") || title.includes("rap")) {
+                    return "Hip Hop";
+                }
+                return "Pop"; // Most common fallback
+            }
+
+            // Music data - all 99 songs from your CSV
             const songs = [
-                { title: "Lonely Together", artist: "Avicii ft. Rita Ora", genre: "EDM", mood: "Energetic", video: "lty1.mp4" },
-                { title: "Blinding Lights", artist: "The Weeknd", genre: "Synth-pop", mood: "Nostalgic", video: "bli1.mp4" },
-                { title: "Starboy", artist: "The Weeknd", genre: "R&B", mood: "Confident", video: "sta1.mp4" },
-                { title: "I Had Some Help", artist: "Post Malone ft. Morgan Wallen", genre: "Country Pop", mood: "Playful", video: "ihs1.mp4" },
-                { title: "がらくた - JUNK", artist: "Kenshi Yonezu", genre: "J-Pop", mood: "Reflective", video: "gar1.mp4" },
-                { title: "Ma Meilleure Ennemie", artist: "Stromae", genre: "Electronic", mood: "Dramatic", video: "mme1.mp4" },
-                { title: "Remember Me", artist: "d4vd", genre: "Indie Pop", mood: "Melancholic", video: "rem1.mp4" },
-                { title: "Wasteland", artist: "Royal & the Serpent", genre: "Alternative", mood: "Rebellious", video: "was1.mp4" },
-                { title: "The Line", artist: "Twenty One Pilots", genre: "Alternative", mood: "Reflective", video: "tli1.mp4" },
-                { title: "To Ashes and Blood", artist: "Woodkid", genre: "Indie Pop", mood: "Cinematic", video: "taa1.mp4" },
-                { title: "Spin The Wheel", artist: "Arcane", genre: "Electronic", mood: "Energetic", video: "stw1.mp4" },
-                { title: "Bella Ciao", artist: "Manu Pilas", genre: "Folk", mood: "Rebellious", video: "bel1.mp4" },
-                { title: "I Don't Wanna Wait", artist: "David Guetta", genre: "EDM", mood: "Energetic", video: "idw1.mp4" },
-                { title: "Watermelon Sugar", artist: "Harry Styles", genre: "Pop", mood: "Playful", video: "was2.mp4" },
-                { title: "Stars Will Align", artist: "Kygo", genre: "EDM", mood: "Uplifting", video: "swa1.mp4" },
-                { title: "Paint The Town Blue", artist: "Ashnikko", genre: "Pop", mood: "Rebellious", video: "ptt1.mp4" },
-                { title: "Enemy", artist: "Imagine Dragons ft. JID", genre: "Alternative", mood: "Intense", video: "ene1.mp4" },
-                { title: "A Sky Full of Stars", artist: "Coldplay", genre: "Pop", mood: "Uplifting", video: "asf1.mp4" },
-                { title: "Hymn for the Weekend", artist: "Coldplay", genre: "Pop", mood: "Celebratory", video: "hft1.mp4" },
-                { title: "Closer", artist: "The Chainsmokers", genre: "EDM", mood: "Nostalgic", video: "clo1.mp4" },
-                { title: "Heaven", artist: "Avicii", genre: "EDM", mood: "Uplifting", video: "hea1.mp4" },
-                { title: "Save Your Tears (Remix)", artist: "The Weeknd ft. Ariana Grande", genre: "Pop", mood: "Melancholic", video: "syt1.mp4" },
-                { title: "Baby", artist: "Justin Bieber", genre: "Pop", mood: "Flirtatious", video: "bab1.mp4" },
-                { title: "Strongest (Alan Walker Remix)", artist: "Ina Wroldsen", genre: "EDM", mood: "Empowering", video: "str1.mp4" },
-                { title: "Broken Arrows", artist: "Avicii", genre: "EDM", mood: "Hopeful", video: "bro1.mp4" },
-                { title: "Something Just Like This", artist: "The Chainsmokers", genre: "EDM", mood: "Romantic", video: "sjl1.mp4" },
-                { title: "Rise Up", artist: "TheFatRat", genre: "Electronic", mood: "Uplifting", video: "ris1.mp4" },
-                { title: "Treat You Better", artist: "Shawn Mendes", genre: "Pop", mood: "Romantic", video: "tyb1.mp4" },
-                { title: "On & On", artist: "Cartoon", genre: "Electronic", mood: "Energetic", video: "ono1.mp4" },
-                { title: "Sunshine", artist: "OneRepublic", genre: "Pop", mood: "Uplifting", video: "sun1.mp4" },
-                { title: "Viva La Vida", artist: "Coldplay", genre: "Pop", mood: "Epic", video: "viv1.mp4" },
-                { title: "Happier", artist: "Marshmello", genre: "EDM", mood: "Bittersweet", video: "hap1.mp4" },
-                { title: "Let Her Go", artist: "Passenger", genre: "Folk Pop", mood: "Melancholic", video: "lhg1.mp4" },
-                { title: "Let Me Down Slowly", artist: "Alec Benjamin", genre: "Pop", mood: "Melancholic", video: "lmd1.mp4" },
-                { title: "7 Years", artist: "Lukas Graham", genre: "Pop", mood: "Reflective", video: "sev1.mp4" },
-                { title: "Superheroes", artist: "The Script", genre: "Pop", mood: "Inspirational", video: "sup1.mp4" },
-                { title: "Hall of Fame", artist: "The Script ft. will.i.am", genre: "Pop", mood: "Motivational", video: "hof1.mp4" },
-                { title: "L'escut al pit", artist: "FC Barcelona", genre: "Anthem", mood: "Proud", video: "lap1.mp4" },
-                { title: "Sapphire", artist: "Ed Sheeran", genre: "Pop", mood: "Reflective", video: "sap1.mp4" },
-                { title: "Night Changes", artist: "One Direction", genre: "Pop", mood: "Nostalgic", video: "nig1.mp4" },
-                { title: "Yellow", artist: "Coldplay", genre: "Pop", mood: "Romantic", video: "yel1.mp4" },
-                { title: "For the First Time", artist: "The Script", genre: "Pop", mood: "Reflective", video: "ftf1.mp4" },
-                { title: "The Scientist", artist: "Coldplay", genre: "Pop", mood: "Melancholic", video: "sci1.mp4" },
-                { title: "Nothing", artist: "The Script", genre: "Pop", mood: "Heartbroken", video: "not1.mp4" },
-                { title: "Paradise", artist: "Coldplay", genre: "Pop", mood: "Uplifting", video: "par1.mp4" }
+                { title: "Headlights (feat. KIDDO)", artist: "Alok", genre: getBasicGenre("Alok", "Headlights (feat. KIDDO)"), mood: "Unknown" },
+                { title: "On My Way", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "On My Way"), mood: "Unknown" },
+                { title: "Man On The Moon", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Man On The Moon"), mood: "Unknown" },
+                { title: "Paradise", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Paradise"), mood: "Unknown" },
+                { title: "Sing Me to Sleep", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Sing Me to Sleep"), mood: "Unknown" },
+                { title: "Fake A Smile", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Fake A Smile"), mood: "Unknown" },
+                { title: "All Falls Down (feat. Juliander)", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "All Falls Down (feat. Juliander)"), mood: "Unknown" },
+                { title: "Lost Control", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Lost Control"), mood: "Unknown" },
+                { title: "Faded - Lost Stories Remix", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Faded - Lost Stories Remix"), mood: "Unknown" },
+                { title: "Ghost", artist: "Justin Bieber", genre: getBasicGenre("Justin Bieber", "Ghost"), mood: "Unknown" },
+                { title: "Bam Bam (feat. Ed Sheeran)", artist: "Camila Cabello", genre: getBasicGenre("Camila Cabello", "Bam Bam (feat. Ed Sheeran)"), mood: "Unknown" },
+                { title: "Peaches (feat. Daniel Caesar & Giveon)", artist: "Justin Bieber", genre: getBasicGenre("Justin Bieber", "Peaches (feat. Daniel Caesar & Giveon)"), mood: "Unknown" },
+                { title: "Unstoppable", artist: "Sia", genre: getBasicGenre("Sia", "Unstoppable"), mood: "Unknown" },
+                { title: "We Are One (Ole Ola) [The Official 2014 FIFA World Cup Song] (feat. Jennifer Lopez & Claudia Leitte)", artist: "Pitbull", genre: getBasicGenre("Pitbull", "We Are One (Ole Ola) [The Official 2014 FIFA World Cup Song] (feat. Jennifer Lopez & Claudia Leitte)"), mood: "Unknown" },
+                { title: "Heat Waves", artist: "Glass Animals", genre: getBasicGenre("Glass Animals", "Heat Waves"), mood: "Unknown" },
+                { title: "Alone", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Alone"), mood: "Unknown" },
+                { title: "Faded", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Faded"), mood: "Unknown" },
+                { title: "Hello World", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Hello World"), mood: "Unknown" },
+                { title: "One Summer Day", artist: "Joe Hisaishi", genre: getBasicGenre("Joe Hisaishi", "One Summer Day"), mood: "Unknown" },
+                { title: "The Return", artist: "Joe Hisaishi", genre: getBasicGenre("Joe Hisaishi", "The Return"), mood: "Unknown" },
+                { title: "Avem (The Aviation Theme)", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Avem (The Aviation Theme)"), mood: "Unknown" },
+                { title: "Millionaire (feat. Nelly) - Alan Walker Remix", artist: "Cash Cash", genre: getBasicGenre("Cash Cash", "Millionaire (feat. Nelly) - Alan Walker Remix"), mood: "Unknown" },
+                { title: "Cradles", artist: "Sub Urban", genre: getBasicGenre("Sub Urban", "Cradles"), mood: "Unknown" },
+                { title: "Different World (feat. CORSAK)", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Different World (feat. CORSAK)"), mood: "Unknown" },
+                { title: "In Your Arms (with X Ambassadors) [Alan Walker Remix]", artist: "ILLENIUM", genre: getBasicGenre("ILLENIUM", "In Your Arms (with X Ambassadors) [Alan Walker Remix]"), mood: "Unknown" },
+                { title: "We'll Be Alright (Movie Edit)", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "We'll Be Alright (Movie Edit)"), mood: "Unknown" },
+                { title: "Dreamers [Music from the FIFA World Cup Qatar 2022 Official Soundtrack]", artist: "Jung Kook", genre: getBasicGenre("Jung Kook", "Dreamers [Music from the FIFA World Cup Qatar 2022 Official Soundtrack]"), mood: "Unknown" },
+                { title: "Sparkle - English Version", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Sparkle - English Version"), mood: "Unknown" },
+                { title: "Wednesday Main Titles", artist: "Danny Elfman", genre: getBasicGenre("Danny Elfman", "Wednesday Main Titles"), mood: "Unknown" },
+                { title: "Is There Still Anything That Love Can Do? (English Version)", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Is There Still Anything That Love Can Do? (English Version)"), mood: "Unknown" },
+                { title: "Seasons", artist: "Rival", genre: getBasicGenre("Rival", "Seasons"), mood: "Unknown" },
+                { title: "We'll Be Alright", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "We'll Be Alright"), mood: "Unknown" },
+                { title: "Dream lantern", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Dream lantern"), mood: "Unknown" },
+                { title: "Sparkle - Original Version", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Sparkle - Original Version"), mood: "Unknown" },
+                { title: "Dream Lantern - English Version", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Dream Lantern - English Version"), mood: "Unknown" },
+                { title: "Nandemonaiya - movie ver.", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Nandemonaiya - movie ver."), mood: "Unknown" },
+                { title: "Bloody Mary", artist: "Lady Gaga", genre: getBasicGenre("Lady Gaga", "Bloody Mary"), mood: "Unknown" },
+                { title: "Zenzenzense - movie ver.", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Zenzenzense - movie ver."), mood: "Unknown" },
+                { title: "STAY (with Justin Bieber)", artist: "The Kid LAROI", genre: getBasicGenre("The Kid LAROI", "STAY (with Justin Bieber)"), mood: "Unknown" },
+                { title: "Running Out Of Roses", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Running Out Of Roses"), mood: "Unknown" },
+                { title: "STAY (with Justin Bieber)", artist: "The Kid LAROI", genre: getBasicGenre("The Kid LAROI", "STAY (with Justin Bieber)"), mood: "Unknown" },
+                { title: "Savannah", artist: "Diviners", genre: getBasicGenre("Diviners", "Savannah"), mood: "Unknown" },
+                { title: "Opening Song - Merry-Go-Round of Life", artist: "Joe Hisaishi", genre: getBasicGenre("Joe Hisaishi", "Opening Song - Merry-Go-Round of Life"), mood: "Unknown" },
+                { title: "Is There Still Anything That Love Can Do?", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Is There Still Anything That Love Can Do?"), mood: "Unknown" },
+                { title: "DARKSIDE", artist: "Neoni", genre: getBasicGenre("Neoni", "DARKSIDE"), mood: "Unknown" },
+                { title: "Bones", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Bones"), mood: "Unknown" },
+                { title: "Enemy (with JID) - from the series Arcane League of Legends", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Enemy (with JID) - from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Believer", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Believer"), mood: "Unknown" },
+                { title: "Side by Side", artist: "BewhY", genre: getBasicGenre("BewhY", "Side by Side"), mood: "Unknown" },
+                { title: "Stranger Things (feat. OneRepublic) - Alan Walker Remix", artist: "Kygo", genre: getBasicGenre("Kygo", "Stranger Things (feat. OneRepublic) - Alan Walker Remix"), mood: "Unknown" },
+                { title: "Paradise", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Paradise"), mood: "Unknown" },
+                { title: "Dar um Jeito (We Will Find a Way) [The Official 2014 FIFA World Cup Anthem] (feat. Avicii & Alexandre Pires)", artist: "Carlos Santana", genre: getBasicGenre("Carlos Santana", "Dar um Jeito (We Will Find a Way) [The Official 2014 FIFA World Cup Anthem] (feat. Avicii & Alexandre Pires)"), mood: "Unknown" },
+                { title: "Cheap Thrills", artist: "Sia", genre: getBasicGenre("Sia", "Cheap Thrills"), mood: "Unknown" },
+                { title: "KANATA HALUKA", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "KANATA HALUKA"), mood: "Unknown" },
+                { title: "Demons", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Demons"), mood: "Unknown" },
+                { title: "Suzume (feat. Toaka)", artist: "RADWIMPS", genre: getBasicGenre("RADWIMPS", "Suzume (feat. Toaka)"), mood: "Unknown" },
+                { title: "アイドル", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "アイドル"), mood: "Unknown" },
+                { title: "メフィスト", artist: "QUEEN BEE", genre: getBasicGenre("QUEEN BEE", "メフィスト"), mood: "Unknown" },
+                { title: "Cheap Thrills", artist: "Sia", genre: getBasicGenre("Sia", "Cheap Thrills"), mood: "Unknown" },
+                { title: "夜に駆ける", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "夜に駆ける"), mood: "Unknown" },
+                { title: "Heathens", artist: "Twenty One Pilots", genre: getBasicGenre("Twenty One Pilots", "Heathens"), mood: "Unknown" },
+                { title: "祝福", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "祝福"), mood: "Unknown" },
+                { title: "Infinity", artist: "Jaymes Young", genre: getBasicGenre("Jaymes Young", "Infinity"), mood: "Unknown" },
+                { title: "群青", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "群青"), mood: "Unknown" },
+                { title: "Love Yourself", artist: "Justin Bieber", genre: getBasicGenre("Justin Bieber", "Love Yourself"), mood: "Unknown" },
+                { title: "The Nights", artist: "Avicii", genre: getBasicGenre("Avicii", "The Nights"), mood: "Unknown" },
+                { title: "Royalty", artist: "Egzod", genre: getBasicGenre("Egzod", "Royalty"), mood: "Unknown" },
+                { title: "No Lie", artist: "Sean Paul", genre: getBasicGenre("Sean Paul", "No Lie"), mood: "Unknown" },
+                { title: "WITHOUT YOU", artist: "The Kid LAROI", genre: getBasicGenre("The Kid LAROI", "WITHOUT YOU"), mood: "Unknown" },
+                { title: "Aurora", artist: "K-391", genre: getBasicGenre("K-391", "Aurora"), mood: "Unknown" },
+                { title: "Legends Never Die - (Remix)", artist: "League of Legends", genre: getBasicGenre("League of Legends", "Legends Never Die - (Remix)"), mood: "Unknown" },
+                { title: "Lemon", artist: "Kenshi Yonezu", genre: getBasicGenre("Kenshi Yonezu", "Lemon"), mood: "Unknown" },
+                { title: "Lonely World", artist: "K-391", genre: getBasicGenre("K-391", "Lonely World"), mood: "Unknown" },
+                { title: "Bad Liar", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Bad Liar"), mood: "Unknown" },
+                { title: "Waiting For Love", artist: "Avicii", genre: getBasicGenre("Avicii", "Waiting For Love"), mood: "Unknown" },
+                { title: "The Spectre", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "The Spectre"), mood: "Unknown" },
+                { title: "Move Your Body - Alan Walker Remix", artist: "Sia", genre: getBasicGenre("Sia", "Move Your Body - Alan Walker Remix"), mood: "Unknown" },
+                { title: "あの夢をなぞって", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "あの夢をなぞって"), mood: "Unknown" },
+                { title: "Natural", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Natural"), mood: "Unknown" },
+                { title: "KICK BACK", artist: "Kenshi Yonezu", genre: getBasicGenre("Kenshi Yonezu", "KICK BACK"), mood: "Unknown" },
+                { title: "Pasoori", artist: "Ali Sethi", genre: getBasicGenre("Ali Sethi", "Pasoori"), mood: "Unknown" },
+                { title: "More Than You Know", artist: "Axwell /\ Ingrosso", genre: getBasicGenre("Axwell /\ Ingrosso", "More Than You Know"), mood: "Unknown" },
+                { title: "End of Time", artist: "K-391", genre: getBasicGenre("K-391", "End of Time"), mood: "Unknown" },
+                { title: "I Ain't Worried", artist: "OneRepublic", genre: getBasicGenre("OneRepublic", "I Ain't Worried"), mood: "Unknown" },
+                { title: "Warriors", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Warriors"), mood: "Unknown" },
+                { title: "The Last of Us", artist: "Gustavo Santaolalla", genre: getBasicGenre("Gustavo Santaolalla", "The Last of Us"), mood: "Unknown" },
+                { title: "INDUSTRY BABY (feat. Jack Harlow)", artist: "Lil Nas X", genre: getBasicGenre("Lil Nas X", "INDUSTRY BABY (feat. Jack Harlow)"), mood: "Unknown" },
+                { title: "Toxic", artist: "BoyWithUke", genre: getBasicGenre("BoyWithUke", "Toxic"), mood: "Unknown" },
+                { title: "勇者", artist: "YOASOBI", genre: getBasicGenre("YOASOBI", "勇者"), mood: "Unknown" },
+                { title: "Without You (feat. Sandro Cavazza)", artist: "Avicii", genre: getBasicGenre("Avicii", "Without You (feat. Sandro Cavazza)"), mood: "Unknown" },
+                { title: "Thunder", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Thunder"), mood: "Unknown" },
+                { title: "Counting Stars", artist: "OneRepublic", genre: getBasicGenre("OneRepublic", "Counting Stars"), mood: "Unknown" },
+                { title: "Hayya Hayya (Better Together) - Music from the FIFA World Cup Qatar 2022 Official Soundtrack", artist: "Trinidad Cardona", genre: getBasicGenre("Trinidad Cardona", "Hayya Hayya (Better Together) - Music from the FIFA World Cup Qatar 2022 Official Soundtrack)"), mood: "Unknown" },
+                { title: "Sunflower - Spider-Man: Into the Spider-Verse", artist: "Post Malone", genre: getBasicGenre("Post Malone", "Sunflower - Spider-Man: Into the Spider-Verse"), mood: "Unknown" },
+                { title: "What's Up Danger (with Black Caviar)", artist: "Blackway", genre: getBasicGenre("Blackway", "What's Up Danger (with Black Caviar)"), mood: "Unknown" },
+                { title: "Blue Moon", artist: "Paul Hand", genre: getBasicGenre("Paul Hand", "Blue Moon"), mood: "Unknown" },
+                { title: "Circles", artist: "Post Malone", genre: getBasicGenre("Post Malone", "Circles"), mood: "Unknown" },
+                { title: "Pirates Of The Caribbean - Main Theme - He's A Pirate", artist: "Geek Music", genre: getBasicGenre("Geek Music", "Pirates Of The Caribbean - Main Theme - He's A Pirate"), mood: "Unknown" },
+                { title: "恋愛サーキュレーション", artist: "物語シリーズ", genre: getBasicGenre("物語シリーズ", "恋愛サーキュレーション"), mood: "Unknown" },
+                { title: "Lucid Dreams", artist: "Juice WRLD", genre: getBasicGenre("Juice WRLD", "Lucid Dreams"), mood: "Unknown" },
+                { title: "Fire - Official UEFA EURO 2024 Song", artist: "MEDUZA", genre: getBasicGenre("MEDUZA", "Fire - Official UEFA EURO 2024 Song"), mood: "Unknown" },
+                { title: "As It Was", artist: "Harry Styles", genre: getBasicGenre("Harry Styles", "As It Was"), mood: "Unknown" },
+                { title: "Story of My Life", artist: "One Direction", genre: getBasicGenre("One Direction", "Story of My Life"), mood: "Unknown" },
+                { title: "WRONG (feat. Lil Mosey)", artist: "The Kid LAROI", genre: getBasicGenre("The Kid LAROI", "WRONG (feat. Lil Mosey)"), mood: "Unknown" },
+                { title: "Sorry", artist: "Justin Bieber", genre: getBasicGenre("Justin Bieber", "Sorry"), mood: "Unknown" },
+                { title: "Levels - Radio Edit", artist: "Avicii", genre: getBasicGenre("Avicii", "Levels - Radio Edit"), mood: "Unknown" },
+                { title: "Hey Brother", artist: "Avicii", genre: getBasicGenre("Avicii", "Hey Brother"), mood: "Unknown" },
+                { title: "Alone, Pt. II", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Alone, Pt. II"), mood: "Unknown" },
+                { title: "Heading Home", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Heading Home"), mood: "Unknown" },
+                { title: "Shape of You", artist: "Ed Sheeran", genre: getBasicGenre("Ed Sheeran", "Shape of You"), mood: "Unknown" },
+                { title: "Lily", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Lily"), mood: "Unknown" },
+                { title: "Ignite", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "Ignite"), mood: "Unknown" },
+                { title: "The Drum", artist: "Alan Walker", genre: getBasicGenre("Alan Walker", "The Drum"), mood: "Unknown" },
+                { title: "Levels - Original Version", artist: "Avicii", genre: getBasicGenre("Avicii", "Levels - Original Version"), mood: "Unknown" },
+                { title: "The Days", artist: "Avicii", genre: getBasicGenre("Avicii", "The Days"), mood: "Unknown" },
+                { title: "Arcade", artist: "Duncan Laurence", genre: getBasicGenre("Duncan Laurence", "Arcade"), mood: "Unknown" },
+                { title: "Wake Me Up", artist: "Avicii", genre: getBasicGenre("Avicii", "Wake Me Up"), mood: "Unknown" },
+                { title: "Lonely Together (feat. Rita Ora)", artist: "Avicii", genre: getBasicGenre("Avicii", "Lonely Together (feat. Rita Ora)"), mood: "Unknown" },
+                { title: "Blinding Lights", artist: "The Weeknd", genre: getBasicGenre("The Weeknd", "Blinding Lights"), mood: "Unknown" },
+                { title: "Starboy", artist: "The Weeknd", genre: getBasicGenre("The Weeknd", "Starboy"), mood: "Unknown" },
+                { title: "I Had Some Help (Feat. Morgan Wallen)", artist: "Post Malone", genre: getBasicGenre("Post Malone", "I Had Some Help (Feat. Morgan Wallen)"), mood: "Unknown" },
+                { title: "がらくた - JUNK", artist: "Kenshi Yonezu", genre: getBasicGenre("Kenshi Yonezu", "がらくた - JUNK"), mood: "Unknown" },
+                { title: "Ma Meilleure Ennemie (from the series Arcane League of Legends)", artist: "Stromae", genre: getBasicGenre("Stromae", "Ma Meilleure Ennemie (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Remember Me (from the series Arcane League of Legends)", artist: "d4vd", genre: getBasicGenre("d4vd", "Remember Me (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Wasteland (from the series Arcane League of Legends)", artist: "Royal & the Serpent", genre: getBasicGenre("Royal & the Serpent", "Wasteland (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "The Line (from the series Arcane League of Legends)", artist: "Twenty One Pilots", genre: getBasicGenre("Twenty One Pilots", "The Line (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "To Ashes and Blood (from the series Arcane League of Legends)", artist: "Woodkid", genre: getBasicGenre("Woodkid", "To Ashes and Blood (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Spin The Wheel (from the series Arcane League of Legends)", artist: "Arcane", genre: getBasicGenre("Arcane", "Spin The Wheel (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Bella Ciao - Música Original de la Serie la Casa de Papel/ Money Heist", artist: "Manu Pilas", genre: getBasicGenre("Manu Pilas", "Bella Ciao - Música Original de la Serie la Casa de Papel/ Money Heist"), mood: "Unknown" },
+                { title: "I Don't Wanna Wait", artist: "David Guetta", genre: getBasicGenre("David Guetta", "I Don't Wanna Wait"), mood: "Unknown" },
+                { title: "Watermelon Sugar", artist: "Harry Styles", genre: getBasicGenre("Harry Styles", "Watermelon Sugar"), mood: "Unknown" },
+                { title: "Stars Will Align", artist: "Kygo", genre: getBasicGenre("Kygo", "Stars Will Align"), mood: "Unknown" },
+                { title: "Paint The Town Blue (from the series Arcane League of Legends)", artist: "Ashnikko", genre: getBasicGenre("Ashnikko", "Paint The Town Blue (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "Enemy with JID (Opening Title Version) (from the series Arcane League of Legends)", artist: "Imagine Dragons", genre: getBasicGenre("Imagine Dragons", "Enemy with JID (Opening Title Version) (from the series Arcane League of Legends)"), mood: "Unknown" },
+                { title: "A Sky Full of Stars", artist: "Coldplay", genre: getBasicGenre("Coldplay", "A Sky Full of Stars"), mood: "Unknown" },
+                { title: "Hymn for the Weekend", artist: "Coldplay", genre: getBasicGenre("Coldplay", "Hymn for the Weekend"), mood: "Unknown" },
+                { title: "Closer", artist: "The Chainsmokers", genre: getBasicGenre("The Chainsmokers", "Closer"), mood: "Unknown" },
+                { title: "Heaven", artist: "Avicii", genre: getBasicGenre("Avicii", "Heaven"), mood: "Unknown" },
+                { title: "Save Your Tears (Remix) (with Ariana Grande) - Bonus Track", artist: "The Weeknd", genre: getBasicGenre("The Weeknd", "Save Your Tears (Remix) (with Ariana Grande) - Bonus Track)"), mood: "Unknown" },
+                { title: "Baby", artist: "Justin Bieber", genre: getBasicGenre("Justin Bieber", "Baby"), mood: "Unknown" },
+                { title: "Strongest (Alan Walker Remix)", artist: "Ina Wroldsen", genre: getBasicGenre("Ina Wroldsen", "Strongest (Alan Walker Remix)"), mood: "Unknown" },
+                { title: "Broken Arrows", artist: "Avicii", genre: getBasicGenre("Avicii", "Broken Arrows"), mood: "Unknown" },
+                { title: "Something Just Like This", artist: "The Chainsmokers", genre: getBasicGenre("The Chainsmokers", "Something Just Like This"), mood: "Unknown" },
+                { title: "Rise Up", artist: "TheFatRat", genre: getBasicGenre("TheFatRat", "Rise Up"), mood: "Unknown" },
+                { title: "Treat You Better", artist: "Shawn Mendes", genre: getBasicGenre("Shawn Mendes", "Treat You Better"), mood: "Unknown" },
+                { title: "On & On", artist: "Cartoon", genre: getBasicGenre("Cartoon", "On & On"), mood: "Unknown" },
+                { title: "Sunshine", artist: "OneRepublic", genre: getBasicGenre("OneRepublic", "Sunshine"), mood: "Unknown" },
+                { title: "Viva La Vida", artist: "Coldplay", genre: getBasicGenre("Coldplay", "Viva La Vida"), mood: "Unknown" },
+                { title: "Happier", artist: "Marshmello", genre: getBasicGenre("Marshmello", "Happier"), mood: "Unknown" },
+                { title: "Let Her Go", artist: "Passenger", genre: getBasicGenre("Passenger", "Let Her Go"), mood: "Unknown" },
+                { title: "Let Me Down Slowly", artist: "Alec Benjamin", genre: getBasicGenre("Alec Benjamin", "Let Me Down Slowly"), mood: "Unknown" },
+                { title: "7 Years", artist: "Lukas Graham", genre: getBasicGenre("Lukas Graham", "7 Years"), mood: "Unknown" },
+                { title: "Superheroes", artist: "The Script", genre: getBasicGenre("The Script", "Superheroes"), mood: "Unknown" },
+                { title: "Hall of Fame (feat. will.i.am)", artist: "The Script", genre: getBasicGenre("The Script", "Hall of Fame (feat. will.i.am)"), mood: "Unknown" },
+                { title: "L'escut al pit (cant oficial del 125è aniversari del Barça)", artist: "FC Barcelona", genre: getBasicGenre("FC Barcelona", "L'escut al pit (cant oficial del 125è aniversari del Barça)"), mood: "Unknown" },
+                { title: "Sapphire", artist: "Ed Sheeran", genre: getBasicGenre("Ed Sheeran", "Sapphire"), mood: "Unknown" },
+                { title: "Night Changes", artist: "One Direction", genre: getBasicGenre("One Direction", "Night Changes"), mood: "Unknown" },
+                { title: "Yellow", artist: "Coldplay", genre: getBasicGenre("Coldplay", "Yellow"), mood: "Unknown" },
+                { title: "For the First Time", artist: "The Script", genre: getBasicGenre("The Script", "For the First Time"), mood: "Unknown" },
+                { title: "The Scientist", artist: "Coldplay", genre: getBasicGenre("Coldplay", "The Scientist"), mood: "Unknown" },
+                { title: "Nothing", artist: "The Script", genre: getBasicGenre("The Script", "Nothing"), mood: "Unknown" },
+                { title: "Paradise", artist: "Coldplay", genre: getBasicGenre("Coldplay", "Paradise"), mood: "Unknown" }
             ];
+            
+            // Function to assign video filenames based on the first two letters of the song title
+            // and sequential numbering for duplicates.
+            function assignVideoFilenames(songsArray) {
+                const prefixCounts = new Map(); // Map to store counts for each two-letter prefix
 
-            // Music categories for analysis
+                songsArray.forEach(song => {
+                    const prefix = song.title.substring(0, 2).toLowerCase().replace(/[^a-z0-9]/g, ''); // Clean prefix
+                    if (prefix.length < 2) { // Handle very short or non-alphanumeric titles
+                        song.video = `default${songsArray.indexOf(song) + 1}.mp4`; // Fallback to default naming
+                        return;
+                    }
+                    let count = prefixCounts.get(prefix) || 0;
+                    count++;
+                    prefixCounts.set(prefix, count);
+                    song.video = `${prefix}${count}.mp4`;
+                });
+            }
+
+            // Call the function to assign video filenames to your songs
+            assignVideoFilenames(songs);
+
+            // Music categories for analysis (updated to reflect potential new genres)
             const musicCategories = {
-                edm: ["Lonely Together", "I Don't Wanna Wait", "Stars Will Align", "Closer", "Heaven", "Strongest (Alan Walker Remix)", "Broken Arrows", "Something Just Like This", "Happier"],
-                pop: ["Blinding Lights", "Watermelon Sugar", "Save Your Tears (Remix)", "Baby", "Treat You Better", "Sunshine", "Viva La Vida", "Let Me Down Slowly", "7 Years", "Superheroes", "Hall of Fame", "Sapphire", "Night Changes", "Yellow", "For the First Time", "The Scientist", "Nothing", "Paradise"],
-                electronic: ["Starboy", "Ma Meilleure Ennemie", "Spin The Wheel", "Rise Up", "On & On"],
-                alternative: ["Wasteland", "The Line", "Enemy"],
-                folk: ["Let Her Go", "Bella Ciao"],
-                jpop: ["がらくた - JUNK"],
-                indie: ["Remember Me", "To Ashes and Blood"],
-                anthem: ["L'escut al pit"]
+                electronic: songs.filter(s => s.genre === "Electronic").map(s => s.title),
+                pop: songs.filter(s => s.genre === "Pop").map(s => s.title),
+                rock: songs.filter(s => s.genre === "Rock").map(s => s.title),
+                "j-pop/anime": songs.filter(s => s.genre === "J-Pop/Anime").map(s => s.title),
+                "hip hop": songs.filter(s => s.genre === "Hip Hop").map(s => s.title),
+                world: songs.filter(s => s.genre === "World").map(s => s.title),
+                soundtrack: songs.filter(s => s.genre === "Soundtrack").map(s => s.title),
+                "k-pop": songs.filter(s => s.genre === "K-Pop").map(s => s.title),
+                anthem: songs.filter(s => s.genre === "Anthem").map(s => s.title),
+                instrumental: songs.filter(s => s.genre === "Instrumental").map(s => s.title),
+                unknown: songs.filter(s => s.genre === "Unknown").map(s => s.title) // Catch-all for unassigned
             };
-
-            // Music moods for analysis
+            
+            // Music moods for analysis (only "Unknown" will be relevant unless you add more)
             const musicMoods = {
-                energetic: ["Lonely Together", "I Don't Wanna Wait", "Spin The Wheel", "On & On"],
-                melancholic: ["Remember Me", "Save Your Tears (Remix)", "Let Her Go", "Let Me Down Slowly", "The Scientist", "Nothing"],
-                uplifting: ["Stars Will Align", "A Sky Full of Stars", "Hymn for the Weekend", "Heaven", "Rise Up", "Sunshine", "Paradise"],
-                romantic: ["Treat You Better", "Something Just Like This", "Yellow"],
-                reflective: ["がらくた - JUNK", "The Line", "7 Years", "Sapphire", "For the First Time"],
-                rebellious: ["Wasteland", "Paint The Town Blue", "Bella Ciao"],
-                epic: ["Viva La Vida"],
-                inspirational: ["Superheroes", "Hall of Fame"]
+                unknown: songs.filter(s => s.mood === "Unknown").map(s => s.title)
             };
-
+            
             // Listener types based on music preferences
             const listenerTypes = [
                 {
                     type: "RHYTHM ENTHUSIAST",
-                    description: "Your music DNA reveals a deep connection to rhythm and beat. You're drawn to music that makes you move, whether it's the pulsing energy of EDM or the groove of electronic music.",
-                    genres: { edm: 90, pop: 60, electronic: 85, alternative: 30 },
-                    moods: ["energetic", "uplifting"]
+                    description: "Your music DNA reveals a deep connection to rhythm and beat. You're drawn to music that makes you move, whether it's the pulsing energy of Electronic music or the groove of Hip Hop. For you, music is a physical experience that energizes and invigorates.",
+                    genres: { electronic: 90, pop: 60, "hip hop": 75, rock: 40, "j-pop/anime": 30, world: 50, soundtrack: 20, "k-pop": 65, anthem: 40, instrumental: 20 },
+                    moods: ["Unknown"] // Adjusted for generic mood
                 },
                 {
                     type: "MELODIC DREAMER",
-                    description: "Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes. You connect with music on a profound level, often using it as an escape.",
-                    genres: { pop: 85, alternative: 75, folk: 80, indie: 70 },
-                    moods: ["melancholic", "romantic", "reflective"]
+                    description: "Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes. You connect with music on a profound level, often using it as an escape to create your own inner worlds. Music is not just entertainment for you—it's a companion for your most introspective moments.",
+                    genres: { pop: 75, rock: 60, "j-pop/anime": 85, electronic: 65, world: 70, soundtrack: 80, "k-pop": 70, anthem: 50, instrumental: 75 },
+                    moods: ["Unknown"] // Adjusted for generic mood
                 },
                 {
-                    type: "ECLECTIC EXPLORER",
-                    description: "Your music DNA shows an eclectic taste that spans multiple genres. You're curious and open-minded, always seeking new musical experiences.",
-                    genres: { pop: 75, edm: 70, electronic: 65, jpop: 60, alternative: 70, folk: 65 },
-                    moods: ["energetic", "uplifting", "rebellious"]
+                    type: "LYRICAL ANALYST",
+                    description: "Your music DNA shows you value the poetry and storytelling in songs. You listen closely to lyrics and appreciate artists who craft meaningful narratives and express complex emotions through their words. For you, music is a form of literature that speaks directly to your experiences and thoughts.",
+                    genres: { "hip hop": 80, rock: 70, "j-pop/anime": 85, pop: 50, electronic: 40, world: 60, soundtrack: 50, "k-pop": 60, anthem: 70, instrumental: 30 },
+                    moods: ["Unknown"] // Adjusted for generic mood
+                },
+                {
+                    type: "GENRE EXPLORER",
+                    description: "Your music DNA reveals an eclectic taste that transcends genre boundaries. You're curious and open-minded, always seeking new sounds and musical experiences. Rather than sticking to one style, you appreciate the unique qualities each genre brings and how they reflect different cultures and eras.",
+                    genres: { electronic: 75, pop: 75, rock: 75, "j-pop/anime": 75, "hip hop": 75, world: 75, soundtrack: 75, "k-pop": 75, anthem: 75, instrumental: 75 },
+                    moods: ["Unknown"] // Adjusted for generic mood
+                },
+                {
+                    type: "EMOTIONAL RESONATOR",
+                    description: "Your music DNA shows you use music primarily as an emotional outlet and mirror. You're drawn to songs that validate your feelings and help you process life's highs and lows. Music serves as your emotional companion, providing comfort during difficult times and amplifying your joy during good ones.",
+                    genres: { pop: 85, rock: 70, electronic: 75, "j-pop/anime": 80, "hip hop": 65, world: 70, soundtrack: 85, "k-pop": 80, anthem: 60, instrumental: 70 },
+                    moods: ["Unknown"] // Adjusted for generic mood
                 }
             ];
-
+            
             // Music state
             let remainingSongs = [...songs];
             let currentChampion = null;
             let battleCount = 0;
-            let totalBattles = songs.length - 1;
+            let totalBattles = songs.length - 1; // Total battles will be (number of songs - 1)
             let currentlyPlaying = null;
-
+            
             // DOM elements
             const homeScreen = document.getElementById('home-screen');
             const battleScreen = document.getElementById('battle-screen');
@@ -1007,7 +1331,7 @@
             const totalBattlesEl = document.getElementById('total-battles');
             const songsRemainingEl = document.getElementById('songs-remaining');
             const progressFill = document.getElementById('progress-fill');
-
+            
             // Initialize stars
             function createStars() {
                 const starsContainer = document.getElementById('stars');
@@ -1022,11 +1346,12 @@
                     starsContainer.appendChild(star);
                 }
             }
-
+            
             // Initialize floating music notes
             function createFloatingNotes() {
                 const notesContainer = document.getElementById('floating-notes');
                 const notes = ['♪', '♫', '♬', '♩', '♭', '♮', '♯'];
+                
                 for (let i = 0; i < 30; i++) {
                     const note = document.createElement('div');
                     note.classList.add('music-note');
@@ -1039,24 +1364,24 @@
                     notesContainer.appendChild(note);
                 }
             }
-
-            // Click effect with sound
+            
+            // Click effect
             document.addEventListener('click', function(e) {
-                clickSound.currentTime = 0;
-                clickSound.play();
-                
+                // Create ripple effect
                 const ripple = document.createElement('div');
                 ripple.classList.add('click-ripple');
                 ripple.style.left = `${e.pageX}px`;
                 ripple.style.top = `${e.pageY}px`;
                 document.body.appendChild(ripple);
                 
+                // Create visual click effect
                 const visualClick = document.createElement('div');
                 visualClick.classList.add('visual-click');
                 visualClick.style.left = `${e.pageX}px`;
                 visualClick.style.top = `${e.pageY}px`;
                 document.body.appendChild(visualClick);
                 
+                // Create particles
                 const colors = ['#c084fc', '#e879f9', '#60a5fa', '#f472b6', '#a78bfa'];
                 for (let i = 0; i < 8; i++) {
                     const particle = document.createElement('div');
@@ -1069,6 +1394,7 @@
                     particle.style.animation = `particleAnimation ${Math.random() * 0.6 + 0.4}s forwards`;
                     document.body.appendChild(particle);
                     
+                    // Random direction
                     const angle = Math.random() * Math.PI * 2;
                     const distance = Math.random() * 100 + 50;
                     const x = Math.cos(angle) * distance;
@@ -1079,26 +1405,38 @@
                         particle.style.opacity = '0';
                     }, 10);
                     
-                    setTimeout(() => particle.remove(), 1000);
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
                 }
                 
-                setTimeout(() => ripple.remove(), 600);
-                setTimeout(() => visualClick.remove(), 500);
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Remove visual click after animation
+                setTimeout(() => {
+                    visualClick.remove();
+                }, 500);
             });
-
+            
             // Start battle
             function startBattle() {
                 homeScreen.classList.add('hidden');
                 battleScreen.classList.remove('hidden');
                 
+                // Set up first battle
                 if (!currentChampion) {
+                    // First song becomes champion
                     currentChampion = remainingSongs.shift();
                 }
                 
                 const challenger = remainingSongs.shift();
                 updateBattleUI(currentChampion, challenger);
             }
-
+            
             // Update battle UI
             function updateBattleUI(champion, challenger) {
                 battleCount++;
@@ -1106,94 +1444,121 @@
                 totalBattlesEl.textContent = totalBattles;
                 songsRemainingEl.textContent = remainingSongs.length;
                 
+                // Update progress bar
                 const progress = (battleCount / totalBattles) * 100;
                 progressFill.style.width = `${progress}%`;
                 
-                const championCard = document.querySelector('#champion-card .song-title');
-                const championArtist = document.querySelector('#champion-card .artist-name');
-                const championGenre = document.querySelector('#champion-card .genre-tag');
-                const championVideo = document.querySelector('#champion-card .music-video source');
+                // Update song cards
+                const championCardTitle = document.querySelector('#champion-card .song-title');
+                const championCardArtist = document.querySelector('#champion-card .artist-name');
+                const championCardGenre = document.querySelector('#champion-card .genre-tag');
+                const championCardImage = document.querySelector('#champion-card .music-image');
+                const championCardVideo = document.createElement('video'); // Create video element
+                championCardVideo.src = champion.video; // Set video source
+                championCardVideo.loop = true;
+                championCardVideo.muted = true;
+                championCardVideo.autoplay = true;
+                championCardVideo.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'object-cover', 'z-0');
                 
-                const challengerCard = document.querySelector('#challenger-card .song-title');
-                const challengerArtist = document.querySelector('#challenger-card .artist-name');
-                const challengerGenre = document.querySelector('#challenger-card .genre-tag');
-                const challengerVideo = document.querySelector('#challenger-card .music-video source');
+                const challengerCardTitle = document.querySelector('#challenger-card .song-title');
+                const challengerCardArtist = document.querySelector('#challenger-card .artist-name');
+                const challengerCardGenre = document.querySelector('#challenger-card .genre-tag');
+                const challengerCardImage = document.querySelector('#challenger-card .music-image');
+                const challengerCardVideo = document.createElement('video'); // Create video element
+                challengerCardVideo.src = challenger.video; // Set video source
+                challengerCardVideo.loop = true;
+                challengerCardVideo.muted = true;
+                challengerCardVideo.autoplay = true;
+                challengerCardVideo.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'object-cover', 'z-0');
+
+                // Clear previous content and append video
+                championCardImage.innerHTML = ''; // Clear placeholder or previous video
+                championCardImage.appendChild(championCardVideo);
                 
-                championCard.textContent = champion.title;
-                championArtist.textContent = champion.artist;
-                championGenre.textContent = champion.genre;
-                championVideo.src = champion.video;
-                document.querySelector('#champion-card .music-video').load();
+                challengerCardImage.innerHTML = ''; // Clear placeholder or previous video
+                challengerCardImage.appendChild(challengerCardVideo);
                 
-                challengerCard.textContent = challenger.title;
-                challengerArtist.textContent = challenger.artist;
-                challengerGenre.textContent = challenger.genre;
-                challengerVideo.src = challenger.video;
-                document.querySelector('#challenger-card .music-video').load();
+                championCardTitle.textContent = champion.title;
+                championCardArtist.textContent = champion.artist;
+                championCardGenre.textContent = champion.genre;
                 
+                challengerCardTitle.textContent = challenger.title;
+                challengerCardArtist.textContent = challenger.artist;
+                challengerCardGenre.textContent = challenger.genre;
+                
+                // Reset playing state
                 document.querySelectorAll('.music-card').forEach(card => {
                     card.classList.remove('playing');
-                    card.querySelector('.music-video').pause();
                 });
                 currentlyPlaying = null;
             }
-
+            
             // Choose winner
             function chooseWinner(index) {
                 const winner = index === 0 ? currentChampion : {
                     title: document.querySelector('#challenger-card .song-title').textContent,
                     artist: document.querySelector('#challenger-card .artist-name').textContent,
                     genre: document.querySelector('#challenger-card .genre-tag').textContent,
-                    video: document.querySelector('#challenger-card .music-video source').src
+                    mood: "Unknown", // Challenger's mood is also unknown
+                    video: document.querySelector('#challenger-card .music-image video').src // Get video from challenger
                 };
                 
+                // Update champion
                 currentChampion = winner;
                 
+                // Check if battle is over
                 if (remainingSongs.length === 0) {
                     showResult(winner);
                 } else {
                     startBattle();
                 }
             }
-
+            
             // Show result
             function showResult(winner) {
                 battleScreen.classList.add('hidden');
                 resultScreen.classList.remove('hidden');
                 
+                // Update winner card
                 document.querySelector('.winner-title').textContent = winner.title;
                 document.querySelector('.winner-artist').textContent = winner.artist;
                 document.querySelector('#winner-card .genre-tag').textContent = winner.genre;
-                document.querySelector('#winner-card .music-video source').src = winner.video;
-                document.querySelector('#winner-card .music-video').load();
                 
+                const winnerImageContainer = document.querySelector('#winner-card .winner-image');
+                winnerImageContainer.innerHTML = ''; // Clear previous content
+                const winnerVideo = document.createElement('video');
+                winnerVideo.src = winner.video;
+                winnerVideo.loop = true;
+                winnerVideo.muted = true;
+                winnerVideo.autoplay = true;
+                winnerVideo.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'object-cover', 'z-0');
+                winnerImageContainer.appendChild(winnerVideo);
+
+                // Analyze listener type based on winner
                 const listenerType = analyzeListenerType(winner);
                 document.getElementById('listener-type').textContent = listenerType.type;
                 document.getElementById('listener-description').textContent = listenerType.description;
                 
-                document.getElementById('genre-edm').style.width = `${listenerType.genres.edm || 0}%`;
-                document.getElementById('genre-edm-percent').textContent = `${listenerType.genres.edm || 0}%`;
+                // Update genre stats (using the new genre categories)
+                // Note: These percentages are hardcoded in the listenerTypes for now.
+                // To make them dynamic, you'd need to track chosen genres throughout the battle.
+                document.getElementById('genre-edm').style.width = `${listenerType.genres.electronic || 0}%`;
+                document.getElementById('genre-edm-percent').textContent = `${listenerType.genres.electronic || 0}%`;
                 
-                document.getElementById('genre-piano').style.width = `${listenerType.genres.pop || 0}%`;
+                document.getElementById('genre-piano').style.width = `${listenerType.genres.pop || 0}%`; // Using Pop as a placeholder for Piano
                 document.getElementById('genre-piano-percent').textContent = `${listenerType.genres.pop || 0}%`;
                 
-                document.getElementById('genre-jazz').style.width = `${listenerType.genres.electronic || 0}%`;
-                document.getElementById('genre-jazz-percent').textContent = `${listenerType.genres.electronic || 0}%`;
+                document.getElementById('genre-jazz').style.width = `${listenerType.genres["j-pop/anime"] || 0}%`; // Using J-Pop/Anime as a placeholder for Jazz
+                document.getElementById('genre-jazz-percent').textContent = `${listenerType.genres["j-pop/anime"] || 0}%`;
                 
+                // Update mood badges (only "Unknown" will be active)
                 document.querySelectorAll('.mood-badge').forEach(badge => {
                     badge.classList.remove('active');
                 });
                 
                 if (listenerType.moods && listenerType.moods.length > 0) {
                     const moodMap = {
-                        "energetic": "Energetic",
-                        "melancholic": "Melancholic",
-                        "uplifting": "Uplifting",
-                        "romantic": "Romantic",
-                        "reflective": "Chill",
-                        "rebellious": "Rebellious",
-                        "epic": "Epic",
-                        "inspirational": "Inspirational"
+                        "Unknown": "Chill" // Map "Unknown" to "Chill" for display
                     };
                     
                     document.querySelectorAll('.mood-badge').forEach(badge => {
@@ -1203,38 +1568,44 @@
                     });
                 }
                 
+                // Listening Style (these are hardcoded in listenerTypes)
+                document.getElementById('style-immersive').style.width = '90%';
+                document.getElementById('style-immersive-percent').textContent = '90%';
+                document.getElementById('style-background').style.width = '40%';
+                document.getElementById('style-background-percent').textContent = '40%';
+                document.getElementById('style-social').style.width = '55%';
+                document.getElementById('style-social-percent').textContent = '55%';
+
+                // Create confetti celebration
                 createConfetti();
             }
-
-            // Analyze listener type
+            
+            // Analyze listener type based on winner
             function analyzeListenerType(winner) {
-                let winnerGenre = '';
-                for (const [genre, songs] of Object.entries(musicCategories)) {
-                    if (songs.includes(winner.title)) {
-                        winnerGenre = genre;
-                        break;
-                    }
-                }
+                // Find which category the winner belongs to
+                let winnerGenre = winner.genre.toLowerCase(); // Use the assigned genre directly
+                let winnerMood = winner.mood.toLowerCase(); // Use the assigned mood directly
                 
-                let winnerMood = '';
-                for (const [mood, songs] of Object.entries(musicMoods)) {
-                    if (songs.includes(winner.title)) {
-                        winnerMood = mood;
-                        break;
-                    }
-                }
-                
+                // Find best matching listener type
                 let bestMatch = listenerTypes[0];
-                let highestScore = 0;
-                
+                let highestScore = -1; // Initialize with a low score
+
                 for (const type of listenerTypes) {
                     let score = 0;
-                    if (winnerGenre && type.genres[winnerGenre]) {
+                    
+                    // Score based on genre affinity
+                    if (type.genres[winnerGenre]) {
                         score += type.genres[winnerGenre];
+                    } else {
+                        // Penalize if the genre is not explicitly listed in the listener type's preferences
+                        score -= 10; 
                     }
-                    if (winnerMood && type.moods.includes(winnerMood)) {
-                        score += 50;
+                    
+                    // Score based on mood (will mostly be "Unknown" for now)
+                    if (type.moods.includes(winnerMood)) {
+                        score += 50; // Boost for matching mood
                     }
+                    
                     if (score > highestScore) {
                         highestScore = score;
                         bestMatch = type;
@@ -1243,10 +1614,11 @@
                 
                 return bestMatch;
             }
-
-            // Create confetti
+            
+            // Create confetti celebration
             function createConfetti() {
                 const colors = ['#c084fc', '#e879f9', '#60a5fa', '#f472b6', '#a78bfa'];
+                
                 for (let i = 0; i < 100; i++) {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti');
@@ -1256,30 +1628,41 @@
                     confetti.style.height = `${Math.random() * 10 + 5}px`;
                     confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
                     confetti.style.animationDelay = `${Math.random() * 2}s`;
+                    
                     document.body.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 5000);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
                 }
             }
-
+            
             // Restart
             function restartBattle() {
+                // Reset game state
                 remainingSongs = [...songs];
                 currentChampion = null;
                 battleCount = 0;
+                
+                // Shuffle songs
                 shuffleArray(remainingSongs);
+                
+                // Show home screen
                 resultScreen.classList.add('hidden');
                 homeScreen.classList.remove('hidden');
             }
-
+            
             // Share result
             function shareResult() {
                 const winner = document.querySelector('.winner-title').textContent;
                 const artist = document.querySelector('.winner-artist').textContent;
                 const listenerType = document.getElementById('listener-type').textContent;
+                
                 alert(`My ultimate favorite song is "${winner}" by ${artist} and I'm a ${listenerType}! Play the Music Verse Battle to discover yours!`);
             }
-
-            // Shuffle array
+            
+            // Shuffle array (Fisher-Yates algorithm)
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -1287,9 +1670,10 @@
                 }
                 return array;
             }
-
-            // Music playback
+            
+            // Simulate music playing on hover/click
             function setupMusicPlayback() {
+                // For desktop: hover effect
                 document.addEventListener('mouseover', function(e) {
                     const musicCard = e.target.closest('.music-card');
                     if (musicCard && !isMobileDevice()) {
@@ -1297,54 +1681,50 @@
                     }
                 });
                 
+                // For mobile: click effect
                 document.addEventListener('click', function(e) {
                     const musicCard = e.target.closest('.music-card');
                     if (musicCard && isMobileDevice()) {
                         playMusic(musicCard);
                     }
                 });
-                
-                document.addEventListener('mouseout', function(e) {
-                    const musicCard = e.target.closest('.music-card');
-                    if (musicCard && !isMobileDevice()) {
-                        stopMusic(musicCard);
-                    }
-                });
             }
-
+            
+            // Check if user is on mobile device
             function isMobileDevice() {
                 return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             }
-
+            
+            // Play music (visual effect only)
             function playMusic(musicCard) {
-                if (currentlyPlaying === musicCard) return;
-                
-                if (currentlyPlaying) {
-                    currentlyPlaying.classList.remove('playing');
-                    currentlyPlaying.querySelector('.music-video').pause();
-                    currentlyPlaying.querySelector('.vinyl-container').classList.add('hidden');
+                const videoElement = musicCard.querySelector('video');
+                if (!videoElement) return; // No video to play
+
+                // Check if the video is already playing or is the currently designated playing video
+                if (currentlyPlaying === videoElement && !videoElement.paused) {
+                    return; 
                 }
+
+                // Pause all other videos
+                document.querySelectorAll('video').forEach(video => {
+                    if (video !== videoElement && !video.paused) {
+                        video.pause();
+                        video.closest('.music-card').classList.remove('playing');
+                    }
+                });
                 
+                // Play the selected video
+                videoElement.play().catch(e => console.error("Error playing video:", e));
                 musicCard.classList.add('playing');
-                const video = musicCard.querySelector('.music-video');
-                if (video.src) {
-                    video.play();
-                    musicCard.querySelector('.vinyl-container').classList.add('hidden');
-                } else {
-                    musicCard.querySelector('.vinyl-container').classList.remove('hidden');
-                }
-                currentlyPlaying = musicCard;
-            }
-
-            function stopMusic(musicCard) {
-                musicCard.classList.remove('playing');
-                musicCard.querySelector('.music-video').pause();
-                musicCard.querySelector('.vinyl-container').classList.remove('hidden');
-                if (currentlyPlaying === musicCard) {
-                    currentlyPlaying = null;
+                currentlyPlaying = videoElement;
+                
+                // Animate vinyl (if it's a visual effect tied to playing state)
+                const vinyl = musicCard.querySelector('.vinyl');
+                if (vinyl) {
+                    vinyl.style.animationPlayState = 'running';
                 }
             }
-
+            
             // Event listeners
             startButton.addEventListener('click', function() {
                 shuffleArray(remainingSongs);
@@ -1354,20 +1734,26 @@
             restartButton.addEventListener('click', restartBattle);
             shareButton.addEventListener('click', shareResult);
             
+            // Add event listeners to choose buttons
             document.addEventListener('click', function(e) {
                 if (e.target.classList.contains('choose-btn')) {
+                    // Pause all videos when a choice is made
+                    document.querySelectorAll('video').forEach(video => video.pause());
                     const index = parseInt(e.target.getAttribute('data-index'));
                     chooseWinner(index);
                 }
             });
-
+            
             // Initialize
             createStars();
             createFloatingNotes();
             setupMusicPlayback();
             shuffleArray(remainingSongs);
+            
+            // Update total battles display based on actual song count
             totalBattlesEl.textContent = totalBattles;
+            songsRemainingEl.textContent = songs.length; // Initial songs remaining
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9628affba3b98f9a',t:'MTc1MzA3OTgyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
