@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Verse Battle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #0a001a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none' stroke='%23e879f9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 24V6l16-3v18'/%3E%3Ccircle cx='8' cy='24' r='4' fill='%23e879f9'/%3E%3Ccircle cx='24' cy='21' r='4' fill='%23e879f9'/%3E%3C/svg%3E"), auto;
+        }
+        
+        .title-font {
+            font-family: 'Syncopate', sans-serif;
+        }
+        
+        .subtitle-font {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .music-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, rgba(30, 10, 60, 0.8), rgba(10, 0, 30, 0.9));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(233, 213, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(233, 213, 255, 0.1) 0%, 
+                rgba(233, 213, 255, 0) 5%,
+                rgba(233, 213, 255, 0) 95%,
+                rgba(233, 213, 255, 0.1) 100%);
+            pointer-events: none;
+        }
+        
+        .music-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(233, 213, 255, 0.3);
+            border-color: rgba(233, 213, 255, 0.5);
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(233, 213, 255, 0.6);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(233, 213, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(233, 213, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(233, 213, 255, 0); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall 3s ease-in infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c084fc, #e879f9);
+            transition: width 0.5s ease;
+        }
+        
+        .music-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+        
+        .glow-border {
+            box-shadow: 0 0 20px rgba(233, 213, 255, 0.6);
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(233, 213, 255, 0.6); }
+            to { box-shadow: 0 0 30px rgba(216, 180, 254, 0.8); }
+        }
+        
+        .concert-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .sound-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: rgba(233, 213, 255, 0.1);
+            border-radius: 50%;
+            transform-origin: 50% 100%;
+            animation: wave 15s infinite linear;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: 3s;
+            opacity: 0.3;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: 6s;
+            opacity: 0.2;
+        }
+        
+        .wave:nth-child(4) {
+            animation-delay: 9s;
+            opacity: 0.1;
+        }
+        
+        @keyframes wave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        
+        .click-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(233, 213, 255, 0.4);
+            transform: scale(0);
+            animation: clickRipple 0.6s linear;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes clickRipple {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+            }
+        }
+        
+        .footer {
+            background: linear-gradient(90deg, rgba(10, 0, 26, 0.8), rgba(20, 0, 50, 0.8));
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(233, 213, 255, 0.2);
+        }
+        
+        .heart {
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+            color: #ff3366;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .india-flag {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        
+        .holographic {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holographic::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.05) 25%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(255,255,255,0.05) 75%, 
+                rgba(255,255,255,0) 100%);
+            animation: holographicShine 3s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        @keyframes holographicShine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .click-particle {
+            position: absolute;
+            background: radial-gradient(circle, #e879f9 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes particleAnimation {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .music-placeholder {
+            background: linear-gradient(135deg, #1e0a3c 25%, #0a001a 25%, #0a001a 50%, #1e0a3c 50%, #1e0a3c 75%, #0a001a 75%, #0a001a 100%);
+            background-size: 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(233, 213, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 150%; }
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px rgba(233, 213, 255, 0.8), 
+                         0 0 10px rgba(233, 213, 255, 0.5), 
+                         0 0 15px rgba(233, 213, 255, 0.3);
+        }
+        
+        .visual-click {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(233, 213, 255, 0.8) 0%, rgba(233, 213, 255, 0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            animation: visualClick 0.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes visualClick {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+        
+        .equalizer {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            display: flex;
+            align-items: flex-end;
+            height: 30px;
+            gap: 3px;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .equalizer-bar {
+            width: 4px;
+            background: linear-gradient(to top, #c084fc, #e879f9);
+            border-radius: 2px;
+        }
+        
+        @keyframes equalize1 { 0%, 100% { height: 10px; } 50% { height: 25px; } }
+        @keyframes equalize2 { 0%, 100% { height: 20px; } 50% { height: 5px; } }
+        @keyframes equalize3 { 0%, 100% { height: 15px; } 50% { height: 30px; } }
+        @keyframes equalize4 { 0%, 100% { height: 5px; } 50% { height: 20px; } }
+        @keyframes equalize5 { 0%, 100% { height: 25px; } 50% { height: 10px; } }
+        
+        .eq1 { animation: equalize1 0.8s ease-in-out infinite; }
+        .eq2 { animation: equalize2 1.0s ease-in-out infinite; }
+        .eq3 { animation: equalize3 0.7s ease-in-out infinite; }
+        .eq4 { animation: equalize4 0.9s ease-in-out infinite; }
+        .eq5 { animation: equalize5 1.1s ease-in-out infinite; }
+        
+        .vs-badge {
+            background: linear-gradient(135deg, #c084fc, #e879f9);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(233, 213, 255, 0.6);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .vs-badge::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: transparent;
+            border: 2px solid rgba(233, 213, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .music-title-bg {
+            background: linear-gradient(90deg, rgba(233, 213, 255, 0.1), rgba(216, 180, 254, 0.1));
+            border-left: 3px solid #e879f9;
+        }
+        
+        .stat-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .stat-fill-1 {
+            height: 100%;
+            background: linear-gradient(90deg, #c084fc, #e879f9);
+        }
+        
+        .stat-fill-2 {
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        }
+        
+        .stat-fill-3 {
+            height: 100%;
+            background: linear-gradient(90deg, #f472b6, #ec4899);
+        }
+        
+        .floating-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(233, 213, 255, 0.3);
+            animation: floatNote 15s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes floatNote {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .vinyl {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, 
+                #000 0%, 
+                #000 30%, 
+                #333 30%, 
+                #333 35%, 
+                #000 35%, 
+                #000 40%, 
+                #333 40%, 
+                #333 45%, 
+                #000 45%, 
+                #000 48%, 
+                rgba(0,0,0,0.5) 48%, 
+                rgba(0,0,0,0.5) 100%);
+            animation: spin 4s linear infinite;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .vinyl::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15%;
+            height: 15%;
+            background: #e879f9;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(233, 213, 255, 0.8);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .play-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .music-card:hover .play-indicator,
+        .music-card.playing .play-indicator {
+            opacity: 1;
+        }
+        
+        .play-indicator svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+        
+        .genre-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            background: rgba(233, 213, 255, 0.2);
+            border: 1px solid rgba(233, 213, 255, 0.3);
+        }
+        
+        .artist-name {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+        
+        .dna-strand {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1px;
+            margin: 20px 0;
+        }
+        
+        .dna-node {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to bottom, #c084fc, #e879f9);
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .dna-node::before,
+        .dna-node::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: rgba(233, 213, 255, 0.5);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dna-node::before {
+            top: 4px;
+        }
+        
+        .dna-node::after {
+            bottom: 4px;
+        }
+        
+        .dna-node:nth-child(even) {
+            height: 30px;
+        }
+        
+        .dna-node:nth-child(even)::before {
+            top: 6px;
+        }
+        
+        .dna-node:nth-child(even)::after {
+            bottom: 6px;
+        }
+        
+        .mood-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 5px;
+            background: rgba(233, 213, 255, 0.1);
+            border: 1px solid rgba(233, 213, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .mood-badge:hover {
+            background: rgba(233, 213, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .mood-badge.active {
+            background: linear-gradient(135deg, #c084fc, #e879f9);
+            box-shadow: 0 0 10px rgba(233, 213, 255, 0.5);
+        }
+        
+        .music-playing-animation {
+            display: flex;
+            align-items: flex-end;
+            height: 20px;
+            gap: 2px;
+        }
+        
+        .music-bar {
+            width: 3px;
+            background: #e879f9;
+            border-radius: 1px;
+        }
+        
+        .music-bar-1 { animation: musicBar 0.8s ease-in-out infinite; }
+        .music-bar-2 { animation: musicBar 1.0s ease-in-out infinite; }
+        .music-bar-3 { animation: musicBar 0.6s ease-in-out infinite; }
+        .music-bar-4 { animation: musicBar 0.9s ease-in-out infinite; }
+        
+        @keyframes musicBar {
+            0%, 100% { height: 5px; }
+            50% { height: 20px; }
+        }
+        
+        .music-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Heavenly Concert Background Elements -->
+    <div class="concert-bg"></div>
+    <div class="stars" id="stars"></div>
+    <div class="sound-waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    <div class="floating-notes" id="floating-notes"></div>
+    
+    <!-- Equalizer animation -->
+    <div class="equalizer">
+        <div class="equalizer-bar eq1"></div>
+        <div class="equalizer-bar eq2"></div>
+        <div class="equalizer-bar eq3"></div>
+        <div class="equalizer-bar eq4"></div>
+        <div class="equalizer-bar eq5"></div>
+    </div>
+    
+    <div id="app" class="container mx-auto px-4 py-8 max-w-6xl relative">
+        <!-- Home Screen -->
+        <div id="home-screen" class="flex flex-col items-center justify-center min-h-[80vh] fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-center mb-6 neon-text title-font tracking-wider">MUSIC VERSE BATTLE</h1>
+            <p class="text-lg md:text-xl text-center mb-12 max-w-2xl text-gray-300 subtitle-font">Discover your ultimate favorite song through exciting head-to-head battles in a heavenly concert experience. Your chosen track moves forward to face the next challenger!</p>
+            <button id="start-button" class="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-10 rounded-lg text-xl shadow-lg subtitle-font holographic">
+                START THE CONCERT
+            </button>
+        </div>
+
+        <!-- Music Battle Screen -->
+        <div id="battle-screen" class="hidden fade-in">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold mb-3 title-font neon-text">Battle <span id="current-battle">1</span> of <span id="total-battles">43</span></h2>
+                <p class="text-gray-300 mb-5 subtitle-font">Choose your favorite track</p>
+                <div class="progress-bar w-full max-w-xl mx-auto mb-3">
+                    <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p class="text-sm text-gray-400 subtitle-font">Songs remaining: <span id="songs-remaining">43</span></p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 my-8">
+                <div id="champion-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full md:w-96 slide-in">
+                    <div class="h-56 bg-gray-900 flex items-center justify-center overflow-hidden relative">
+                        <div class="music-image music-placeholder w-full h-full bg-center bg-cover">
+                            <video class="music-video" muted loop playsinline>
+                                <source src="" type="video/mp4">
+                            </video>
+                            <div class="vinyl-container w-32 h-32 relative">
+                                <div class="vinyl"></div>
+                            </div>
+                        </div>
+                        <div class="play-indicator">
+                            <div class="music-playing-animation">
+                                <div class="music-bar music-bar-1" style="height: 10px;"></div>
+                                <div class="music-bar music-bar-2" style="height: 15px;"></div>
+                                <div class="music-bar music-bar-3" style="height: 8px;"></div>
+                                <div class="music-bar music-bar-4" style="height: 12px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="music-title-bg p-3 mb-4">
+                            <h3 class="song-title text-xl font-bold title-font">Current Champion</h3>
+                            <p class="artist-name subtitle-font">Artist Name</p>
+                            <div class="flex flex-wrap mt-2">
+                                <span class="genre-tag">Genre</span>
+                            </div>
+                        </div>
+                        <button class="choose-btn btn w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 py-3 px-4 rounded-lg font-medium subtitle-font" data-index="0">
+                            Choose This Song
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="vs-badge title-font text-2xl font-bold">VS</div>
+                
+                <div id="challenger-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full md:w-96 slide-in">
+                    <div class="h-56 bg-gray-900 flex items-center justify-center overflow-hidden relative">
+                        <div class="music-image music-placeholder w-full h-full bg-center bg-cover">
+                            <video class="music-video" muted loop playsinline>
+                                <source src="" type="video/mp4">
+                            </video>
+                            <div class="vinyl-container w-32 h-32 relative">
+                                <div class="vinyl"></div>
+                            </div>
+                        </div>
+                        <div class="play-indicator">
+                            <div class="music-playing-animation">
+                                <div class="music-bar music-bar-1" style="height: 10px;"></div>
+                                <div class="music-bar music-bar-2" style="height: 15px;"></div>
+                                <div class="music-bar music-bar-3" style="height: 8px;"></div>
+                                <div class="music-bar music-bar-4" style="height: 12px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="music-title-bg p-3 mb-4">
+                            <h3 class="song-title text-xl font-bold title-font">Challenger</h3>
+                            <p class="artist-name subtitle-font">Artist Name</p>
+                            <div class="flex flex-wrap mt-2">
+                                <span class="genre-tag">Genre</span>
+                            </div>
+                        </div>
+                        <button class="choose-btn btn w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 py-3 px-4 rounded-lg font-medium subtitle-font" data-index="1">
+                            Choose This Song
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Music DNA Analysis Result Screen -->
+        <div id="result-screen" class="hidden fade-in relative">
+            <div class="flex flex-col items-center justify-center min-h-[80vh] py-8 relative z-10">
+                <div class="text-center mb-10">
+                    <h2 class="text-4xl md:text-5xl font-bold title-font neon-text mb-3">YOUR MUSIC DNA</h2>
+                    <div class="w-60 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto"></div>
+                </div>
+                
+                <div class="relative mb-10">
+                    <div class="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-purple-400"></div>
+                    <div class="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-pink-500"></div>
+                    <div class="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-purple-400"></div>
+                    <div class="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-pink-500"></div>
+                    
+                    <div id="winner-card" class="music-card rounded-xl overflow-hidden shadow-lg w-full max-w-md slide-in glow-border">
+                        <div class="h-64 bg-gray-900 flex items-center justify-center overflow-hidden relative">
+                            <div class="winner-image music-placeholder w-full h-full bg-center bg-cover">
+                                <video class="music-video" muted loop playsinline>
+                                    <source src="" type="video/mp4">
+                                </video>
+                                <div class="vinyl-container w-40 h-40 relative">
+                                    <div class="vinyl"></div>
+                                </div>
+                            </div>
+                            <div class="play-indicator">
+                                <div class="music-playing-animation">
+                                    <div class="music-bar music-bar-1" style="height: 10px;"></div>
+                                    <div class="music-bar music-bar-2" style="height: 15px;"></div>
+                                    <div class="music-bar music-bar-3" style="height: 8px;"></div>
+                                    <div class="music-bar music-bar-4" style="height: 12px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="winner-title text-2xl font-bold text-center title-font neon-text">Song Title</h3>
+                            <p class="winner-artist text-center subtitle-font text-gray-300 mt-1">Artist Name</p>
+                            <div class="flex flex-wrap justify-center mt-3">
+                                <span class="genre-tag">Genre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="music-card p-6 rounded-xl max-w-2xl mx-auto mb-10 glow-border">
+                    <h3 class="text-2xl font-bold mb-4 text-center title-font text-purple-400">YOU ARE A <span id="listener-type" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">MELODIC DREAMER</span></h3>
+                    
+                    <p id="listener-description" class="text-gray-300 text-center mb-6 subtitle-font">Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes. You connect with music on a profound level, often using it as an escape to create your own inner worlds. Music is not just entertainment for you—it's a companion for your most introspective moments.</p>
+                    
+                    <div class="dna-strand">
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                        <div class="dna-node"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div>
+                            <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">GENRE AFFINITY</h4>
+                            <div class="flex flex-col gap-3">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>EDM</span>
+                                        <span id="genre-edm-percent">85%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="genre-edm" class="stat-fill-1" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>Pop</span>
+                                        <span id="genre-piano-percent">65%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="genre-piano" class="stat-fill-2" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>Alternative</span>
+                                        <span id="genre-jazz-percent">45%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="genre-jazz" class="stat-fill-3" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">MOOD PREFERENCE</h4>
+                            <div class="flex flex-wrap justify-center">
+                                <div class="mood-badge active">Chill</div>
+                                <div class="mood-badge">Energetic</div>
+                                <div class="mood-badge">Melancholic</div>
+                                <div class="mood-badge">Uplifting</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-center text-purple-300 font-semibold mb-3 subtitle-font">LISTENING STYLE</h4>
+                            <div class="flex flex-col gap-3">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>Immersive</span>
+                                        <span id="style-immersive-percent">90%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="style-immersive" class="stat-fill-1" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>Background</span>
+                                        <span id="style-background-percent">40%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="style-background" class="stat-fill-2" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span>Social</span>
+                                        <span id="style-social-percent">55%</span>
+                                    </div>
+                                    <div class="stat-bar">
+                                        <div id="style-social" class="stat-fill-3" style="width: 55%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6">
+                    <button id="restart-button" class="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg subtitle-font">
+                        RESTART
+                    </button>
+                    <button id="share-button" class="btn bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg subtitle-font">
+                        SHARE RESULT
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="footer fixed bottom-0 left-0 w-full py-3 px-4 text-center text-sm text-gray-400 z-10">
+            <p>
+                Made with <span class="heart">❤</span> by Barnik Bhai in 
+                <span class="india-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" class="inline-block">
+                        <rect width="24" height="5" fill="#FF9933"/>
+                        <rect y="5" width="24" height="6" fill="#FFFFFF"/>
+                        <rect y="11" width="24" height="5" fill="#138808"/>
+                        <circle cx="12" cy="8" r="1.5" fill="#000080"/>
+                    </svg>
+                </span> 
+                INDIA
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Music data - 44 songs
+            const songs = [
+                { title: "Lonely Together", artist: "Avicii feat. Rita Ora", genre: "EDM", mood: "Nostalgic", video: "lt1.mp4" },
+                { title: "Blinding Lights", artist: "The Weeknd", genre: "Synth-pop", mood: "Nostalgic", video: "bl1.mp4" },
+                { title: "Starboy", artist: "The Weeknd", genre: "R&B", mood: "Confident", video: "sb1.mp4" },
+                { title: "I Had Some Help", artist: "Post Malone feat. Morgan Wallen", genre: "Country Pop", mood: "Upbeat", video: "ihsh1.mp4" },
+                { title: "がらくた - JUNK", artist: "Kenshi Yonezu", genre: "J-Pop", mood: "Reflective", video: "garakuta1.mp4" },
+                { title: "Ma Meilleure Ennemie", artist: "Stromae", genre: "Electronic", mood: "Dramatic", video: "mme1.mp4" },
+                { title: "Remember Me", artist: "d4vd", genre: "Alternative", mood: "Melancholic", video: "rm1.mp4" },
+                { title: "Wasteland", artist: "Royal & the Serpent", genre: "Alternative", mood: "Rebellious", video: "wl1.mp4" },
+                { title: "The Line", artist: "Twenty One Pilots", genre: "Alternative", mood: "Introspective", video: "tl1.mp4" },
+                { title: "To Ashes and Blood", artist: "Woodkid", genre: "Alternative", mood: "Epic", video: "taab1.mp4" },
+                { title: "Spin The Wheel", artist: "Arcane", genre: "Electronic", mood: "Energetic", video: "stw1.mp4" },
+                { title: "Bella Ciao", artist: "Manu Pilas", genre: "Folk", mood: "Rebellious", video: "bc1.mp4" },
+                { title: "I Don't Wanna Wait", artist: "David Guetta", genre: "EDM", mood: "Energetic", video: "idww1.mp4" },
+                { title: "Watermelon Sugar", artist: "Harry Styles", genre: "Pop", mood: "Playful", video: "ws1.mp4" },
+                { title: "Stars Will Align", artist: "Kygo", genre: "EDM", mood: "Uplifting", video: "swa1.mp4" },
+                { title: "Paint The Town Blue", artist: "Ashnikko", genre: "Pop", mood: "Rebellious", video: "pttb1.mp4" },
+                { title: "Enemy with JID", artist: "Imagine Dragons", genre: "Alternative", mood: "Energetic", video: "ewj1.mp4" },
+                { title: "A Sky Full of Stars", artist: "Coldplay", genre: "Pop", mood: "Uplifting", video: "asfos1.mp4" },
+                { title: "Hymn for the Weekend", artist: "Coldplay", genre: "Pop", mood: "Celebratory", video: "hftw1.mp4" },
+                { title: "Closer", artist: "The Chainsmokers", genre: "EDM", mood: "Nostalgic", video: "cl1.mp4" },
+                { title: "Heaven", artist: "Avicii", genre: "EDM", mood: "Uplifting", video: "hv1.mp4" },
+                { title: "Save Your Tears (Remix)", artist: "The Weeknd with Ariana Grande", genre: "Synth-pop", mood: "Melancholic", video: "syt1.mp4" },
+                { title: "Baby", artist: "Justin Bieber", genre: "Pop", mood: "Romantic", video: "bb1.mp4" },
+                { title: "Strongest (Alan Walker Remix)", artist: "Ina Wroldsen", genre: "EDM", mood: "Empowering", video: "s1.mp4" },
+                { title: "Broken Arrows", artist: "Avicii", genre: "EDM", mood: "Uplifting", video: "ba1.mp4" },
+                { title: "Something Just Like This", artist: "The Chainsmokers", genre: "EDM", mood: "Romantic", video: "sjlt1.mp4" },
+                { title: "Rise Up", artist: "TheFatRat", genre: "Electronic", mood: "Uplifting", video: "ru1.mp4" },
+                { title: "Treat You Better", artist: "Shawn Mendes", genre: "Pop", mood: "Romantic", video: "tyb1.mp4" },
+                { title: "On & On", artist: "Cartoon", genre: "EDM", mood: "Energetic", video: "oo1.mp4" },
+                { title: "Sunshine", artist: "OneRepublic", genre: "Pop", mood: "Uplifting", video: "ss1.mp4" },
+                { title: "Viva La Vida", artist: "Coldplay", genre: "Pop", mood: "Epic", video: "vlv1.mp4" },
+                { title: "Happier", artist: "Marshmello", genre: "EDM", mood: "Bittersweet", video: "hp1.mp4" },
+                { title: "Let Her Go", artist: "Passenger", genre: "Folk", mood: "Melancholic", video: "lhg1.mp4" },
+                { title: "Let Me Down Slowly", artist: "Alec Benjamin", genre: "Pop", mood: "Melancholic", video: "lmds1.mp4" },
+                { title: "7 Years", artist: "Lukas Graham", genre: "Pop", mood: "Reflective", video: "7y1.mp4" },
+                { title: "Superheroes", artist: "The Script", genre: "Pop", mood: "Empowering", video: "sh1.mp4" },
+                { title: "Hall of Fame", artist: "The Script feat. will.i.am", genre: "Pop", mood: "Motivational", video: "hof1.mp4" },
+                { title: "L'escut al pit", artist: "FC Barcelona", genre: "Anthem", mood: "Proud", video: "leap1.mp4" },
+                { title: "Sapphire", artist: "Ed Sheeran", genre: "Pop", mood: "Reflective", video: "sp1.mp4" },
+                { title: "Night Changes", artist: "One Direction", genre: "Pop", mood: "Nostalgic", video: "nc1.mp4" },
+                { title: "Yellow", artist: "Coldplay", genre: "Pop", mood: "Romantic", video: "yl1.mp4" },
+                { title: "For the First Time", artist: "The Script", genre: "Pop", mood: "Reflective", video: "ftft1.mp4" },
+                { title: "The Scientist", artist: "Coldplay", genre: "Pop", mood: "Melancholic", video: "ts1.mp4" },
+                { title: "Nothing", artist: "The Script", genre: "Pop", mood: "Heartbroken", video: "nt1.mp4" },
+                { title: "Paradise", artist: "Coldplay", genre: "Pop", mood: "Uplifting", video: "pd1.mp4" }
+            ];
+            
+            // Music categories for analysis
+            const musicCategories = {
+                edm: ["Lonely Together", "I Don't Wanna Wait", "Stars Will Align", "Closer", "Heaven", "Strongest (Alan Walker Remix)", "Broken Arrows", "Something Just Like This", "On & On", "Happier"],
+                pop: ["Blinding Lights", "Watermelon Sugar", "A Sky Full of Stars", "Hymn for the Weekend", "Save Your Tears (Remix)", "Baby", "Treat You Better", "Sunshine", "Viva La Vida", "Let Me Down Slowly", "7 Years", "Superheroes", "Hall of Fame", "Sapphire", "Night Changes", "Yellow", "For the First Time", "The Scientist", "Nothing", "Paradise"],
+                rnb: ["Starboy"],
+                country_pop: ["I Had Some Help"],
+                jpop: ["がらくた - JUNK"],
+                electronic: ["Ma Meilleure Ennemie", "Spin The Wheel", "Rise Up"],
+                alternative: ["Remember Me", "Wasteland", "The Line", "To Ashes and Blood", "Enemy with JID"],
+                folk: ["Bella Ciao", "Let Her Go"],
+                anthem: ["L'escut al pit"]
+            };
+            
+            // Music moods for analysis
+            const musicMoods = {
+                energetic: ["I Don't Wanna Wait", "Spin The Wheel", "On & On", "Enemy with JID"],
+                melancholic: ["Remember Me", "Save Your Tears (Remix)", "Let Me Down Slowly", "The Scientist", "Nothing"],
+                uplifting: ["Stars Will Align", "A Sky Full of Stars", "Hymn for the Weekend", "Heaven", "Broken Arrows", "Sunshine", "Paradise"],
+                romantic: ["Baby", "Treat You Better", "Something Just Like This", "Yellow"],
+                rebellious: ["Wasteland", "Paint The Town Blue", "Bella Ciao"],
+                nostalgic: ["Lonely Together", "Blinding Lights", "Closer", "Night Changes"],
+                epic: ["To Ashes and Blood", "Viva La Vida"],
+                reflective: ["がらくた - JUNK", "7 Years", "Sapphire", "For the First Time"],
+                bittersweet: ["Happier"],
+                motivational: ["Hall of Fame"],
+                proud: ["L'escut al pit"],
+                heartbroken: ["Nothing"]
+            };
+            
+            // Listener types based on music preferences
+            const listenerTypes = [
+                {
+                    type: "RHYTHM ENTHUSIAST",
+                    description: "Your music DNA reveals a deep connection to rhythm and beat. You're drawn to music that makes you move, whether it's the pulsing energy of EDM or the groove of pop and electronic tracks. For you, music is a physical experience that energizes and invigorates.",
+                    genres: { edm: 90, pop: 60, electronic: 80, alternative: 30 },
+                    moods: ["energetic", "uplifting"]
+                },
+                {
+                    type: "MELODIC DREAMER",
+                    description: "Your music DNA reveals a deep appreciation for emotional melodies and atmospheric soundscapes. You connect with music on a profound level, often using it as an escape to create your own inner worlds. Music is not just entertainment for you—it's a companion for your most introspective moments.",
+                    genres: { pop: 75, alternative: 85, folk: 90, electronic: 65 },
+                    moods: ["melancholic", "nostalgic", "romantic"]
+                },
+                {
+                    type: "LYRICAL ANALYST",
+                    description: "Your music DNA shows you value the poetry and storytelling in songs. You listen closely to lyrics and appreciate artists who craft meaningful narratives and express complex emotions through their words. For you, music is a form of literature that speaks directly to your experiences and thoughts.",
+                    genres: { folk: 95, pop: 50, alternative: 85, rnb: 65 },
+                    moods: ["melancholic", "reflective", "heartbroken"]
+                },
+                {
+                    type: "GENRE EXPLORER",
+                    description: "Your music DNA reveals an eclectic taste that transcends genre boundaries. You're curious and open-minded, always seeking new sounds and musical experiences. Rather than sticking to one style, you appreciate the unique qualities each genre brings and how they reflect different cultures and eras.",
+                    genres: { pop: 75, edm: 75, electronic: 75, alternative: 75, folk: 75, anthem: 75 },
+                    moods: ["energetic", "melancholic", "uplifting", "rebellious"]
+                },
+                {
+                    type: "EMOTIONAL RESONATOR",
+                    description: "Your music DNA shows you use music primarily as an emotional outlet and mirror. You're drawn to songs that validate your feelings and help you process life's highs and lows. Music serves as your emotional companion, providing comfort during difficult times and amplifying your joy during good ones.",
+                    genres: { pop: 85, alternative: 75, folk: 80, rnb: 90 },
+                    moods: ["romantic", "heartbroken", "melancholic", "uplifting"]
+                }
+            ];
+            
+            // Music state
+            let remainingSongs = [...songs];
+            let currentChampion = null;
+            let battleCount = 0;
+            let totalBattles = songs.length - 1;
+            let currentlyPlaying = null;
+            let clickAudio = new Audio('click.mp3'); // Replaced invalid base64 with placeholder MP3 file
+            
+            // UI elements
+            const homeScreen = document.getElementById('home-screen');
+            const battleScreen = document.getElementById('battle-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const startButton = document.getElementById('start-button');
+            const restartButton = document.getElementById('restart-button');
+            const shareButton = document.getElementById('share-button');
+            const championCard = document.getElementById('champion-card');
+            const challengerCard = document.getElementById('challenger-card');
+            const currentBattleElement = document.getElementById('current-battle');
+            const totalBattlesElement = document.getElementById('total-battles');
+            const progressFill = document.getElementById('progress-fill');
+            const songsRemainingElement = document.getElementById('songs-remaining');
+            const winnerCard = document.getElementById('winner-card');
+            const listenerTypeElement = document.getElementById('listener-type');
+            const listenerDescriptionElement = document.getElementById('listener-description');
+            const genreEdm = document.getElementById('genre-edm');
+            const genrePiano = document.getElementById('genre-piano');
+            const genreJazz = document.getElementById('genre-jazz');
+            const genreEdmPercent = document.getElementById('genre-edm-percent');
+            const genrePianoPercent = document.getElementById('genre-piano-percent');
+            const genreJazzPercent = document.getElementById('genre-jazz-percent');
+            const styleImmersive = document.getElementById('style-immersive');
+            const styleBackground = document.getElementById('style-background');
+            const styleSocial = document.getElementById('style-social');
+            const styleImmersivePercent = document.getElementById('style-immersive-percent');
+            const styleBackgroundPercent = document.getElementById('style-background-percent');
+            const styleSocialPercent = document.getElementById('style-social-percent');
+            
+            // Video playback handling
+            function setupVideoPlayback(card) {
+                const video = card.querySelector('.music-video');
+                const playIndicator = card.querySelector('.play-indicator');
+                
+                card.addEventListener('mouseenter', () => {
+                    video.play();
+                    card.classList.add('playing');
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                    card.classList.remove('playing');
+                });
+                
+                card.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (currentlyPlaying && currentlyPlaying !== video) {
+                        currentlyPlaying.pause();
+                        currentlyPlaying.currentTime = 0;
+                        currentlyPlaying.closest('.music-card').classList.remove('playing');
+                    }
+                    video.play();
+                    card.classList.add('playing');
+                    currentlyPlaying = video;
+                });
+                
+                card.addEventListener('touchend', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                    card.classList.remove('playing');
+                    currentlyPlaying = null;
+                });
+            }
+            
+            // Initialize video playback for cards
+            setupVideoPlayback(championCard);
+            setupVideoPlayback(challengerCard);
+            setupVideoPlayback(winnerCard);
+            
+            // Click effect
+            document.addEventListener('click', function(e) {
+                clickAudio.play().catch(error => console.error('Error playing click sound:', error));
+                
+                const ripple = document.createElement('div');
+                ripple.classList.add('click-ripple');
+                ripple.style.left = `${e.clientX}px`;
+                ripple.style.top = `${e.clientY}px`;
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                for (let i = 0; i < 5; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('click-particle');
+                    particle.style.left = `${e.clientX}px`;
+                    particle.style.top = `${e.clientY}px`;
+                    particle.style.width = `${Math.random() * 10 + 5}px`;
+                    particle.style.height = particle.style.width;
+                    particle.style.animation = `particleAnimation ${Math.random() * 0.5 + 0.3}s ease-out`;
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 800);
+                }
+            });
+            
+            // Create stars
+            function createStars() {
+                const starsContainer = document.getElementById('stars');
+                for (let i = 0; i < 100; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            // Create floating music notes
+            function createFloatingNotes() {
+                const notesContainer = document.getElementById('floating-notes');
+                const noteSymbols = ['♪', '♫', '♩', '♬'];
+                for (let i = 0; i < 20; i++) {
+                    const note = document.createElement('div');
+                    note.classList.add('music-note');
+                    note.textContent = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
+                    note.style.left = `${Math.random() * 100}%`;
+                    note.style.animationDelay = `${Math.random() * 10}s`;
+                    note.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                    notesContainer.appendChild(note);
+                }
+            }
+            
+            // Create confetti
+            function createConfetti() {
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.animationDelay = `${Math.random() * 2}s`;
+                    confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }
+            }
+            
+            // Update card content
+            function updateCard(card, song) {
+                const title = card.querySelector('.song-title');
+                const artist = card.querySelector('.artist-name');
+                const genreTag = card.querySelector('.genre-tag');
+                const video = card.querySelector('.music-video source');
+                
+                title.textContent = song.title;
+                artist.textContent = song.artist;
+                genreTag.textContent = song.genre;
+                video.src = song.video;
+                card.querySelector('.music-video').load();
+            }
+            
+            // Start battle
+            function startBattle() {
+                homeScreen.classList.add('hidden');
+                battleScreen.classList.remove('hidden');
+                totalBattlesElement.textContent = totalBattles;
+                updateBattle();
+            }
+            
+            // Update battle
+            function updateBattle() {
+                if (remainingSongs.length < 2 && !currentChampion) {
+                    showResult();
+                    return;
+                }
+                
+                battleCount++;
+                currentBattleElement.textContent = battleCount;
+                songsRemainingElement.textContent = totalBattles - battleCount + 1;
+                progressFill.style.width = `${(battleCount / totalBattles) * 100}%`;
+                
+                if (!currentChampion) {
+                    currentChampion = remainingSongs.shift();
+                }
+                
+                const challenger = remainingSongs.shift();
+                
+                updateCard(championCard, currentChampion);
+                updateCard(challengerCard, challenger);
+            }
+            
+            // Handle song choice
+            function chooseSong(index) {
+                if (index === 0) {
+                    // Champion wins, keep it
+                } else {
+                    // Challenger wins, replace champion
+                    currentChampion = challengerCard.querySelector('.song-title').textContent;
+                    currentChampion = songs.find(song => song.title === currentChampion);
+                }
+                
+                if (remainingSongs.length > 0) {
+                    updateBattle();
+                } else {
+                    showResult();
+                }
+            }
+            
+            // Show result
+            function showResult() {
+                battleScreen.classList.add('hidden');
+                resultScreen.classList.remove('hidden');
+                createConfetti();
+                
+                updateCard(winnerCard, currentChampion);
+                
+                // Determine listener type based on winner
+                const winnerGenre = currentChampion.genre.toLowerCase();
+                const winnerMood = currentChampion.mood.toLowerCase();
+                
+                let bestMatch = listenerTypes[0];
+                let highestScore = 0;
+                
+                listenerTypes.forEach(type => {
+                    let score = 0;
+                    if (type.genres[winnerGenre]) {
+                        score += type.genres[winnerGenre];
+                    }
+                    if (type.moods.includes(winnerMood)) {
+                        score += 50;
+                    }
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestMatch = type;
+                    }
+                });
+                
+                listenerTypeElement.textContent = bestMatch.type;
+                listenerDescriptionElement.textContent = bestMatch.description;
+                
+                // Update genre percentages
+                genreEdm.style.width = `${bestMatch.genres.edm || 0}%`;
+                genrePiano.style.width = `${bestMatch.genres.pop || 0}%`;
+                genreJazz.style.width = `${bestMatch.genres.alternative || 0}%`;
+                genreEdmPercent.textContent = `${bestMatch.genres.edm || 0}%`;
+                genrePianoPercent.textContent = `${bestMatch.genres.pop || 0}%`;
+                genreJazzPercent.textContent = `${bestMatch.genres.alternative || 0}%`;
+                
+                // Update listening style percentages
+                styleImmersive.style.width = `${bestMatch.genres[winnerGenre] || 90}%`;
+                styleBackground.style.width = `${Math.max(30, (bestMatch.genres[winnerGenre] || 0) - 20)}%`;
+                styleSocial.style.width = `${Math.max(20, (bestMatch.genres[winnerGenre] || 0) - 10)}%`;
+                styleImmersivePercent.textContent = `${bestMatch.genres[winnerGenre] || 90}%`;
+                styleBackgroundPercent.textContent = `${Math.max(30, (bestMatch.genres[winnerGenre] || 0) - 20)}%`;
+                styleSocialPercent.textContent = `${Math.max(20, (bestMatch.genres[winnerGenre] || 0) - 10)}%`;
+                
+                // Update mood badges
+                const moodBadges = document.querySelectorAll('.mood-badge');
+                moodBadges.forEach(badge => {
+                    badge.classList.remove('active');
+                    if (bestMatch.moods.includes(badge.textContent.toLowerCase())) {
+                        badge.classList.add('active');
+                    }
+                });
+            }
+            
+            // Event listeners
+            startButton.addEventListener('click', startBattle);
+            
+            document.querySelectorAll('.choose-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    chooseSong(parseInt(button.dataset.index));
+                });
+            });
+            
+            restartButton.addEventListener('click', () => {
+                remainingSongs = [...songs];
+                currentChampion = null;
+                battleCount = 0;
+                resultScreen.classList.add('hidden');
+                homeScreen.classList.remove('hidden');
+            });
+            
+            shareButton.addEventListener('click', () => {
+                const shareText = `I found my Music DNA! My favorite song is "${currentChampion.title}" by ${currentChampion.artist}. I'm a ${listenerTypeElement.textContent}! Discover yours at Music Verse Battle!`;
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Music Verse Battle',
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    alert('Share your result:\n' + shareText);
+                }
+            });
+            
+            // Initialize stars and floating notes
+            createStars();
+            createFloatingNotes();
+        });
+    </script>
+</body>
+</html>
